@@ -100,12 +100,21 @@ Fila* CriaFila (){
   return p;                 // novo fim da fila
 }
 
-void InsereFila (Fila* f){
+void InsereFila (Fila* f, Fila *p){
   if(!f) return;
+  if(!p) return;
   Animal a = ler_Animal();
-  f->fim = ins_fim(f->fim, a);
+  if(a.prioridade == 0){
+      f->fim = ins_fim(f->fim, a);
   if (f->ini == NULL)       // fila estava vazia
     f->ini = f->fim;
+  }
+  if(a.prioridade == 1){
+      p->fim = ins_fim(p->fim, a);
+  if (p->ini == NULL)       // fila estava vazia
+    p->ini = p->fim;
+  }
+
 }
 
  Nos* retira_ini (Nos* ini){
