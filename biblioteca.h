@@ -70,12 +70,11 @@ Animal ler_Animal(){
 }
 
 void imprimir_animal(Animal p){
-  printf("Nome: %s\n", p.nome);
-  printf("Nascimento: %02d/%02d/%04d\n", p.data.dia, p.data.mes, p.data.ano);
-  printf("Espécie: %s\n", p.especie);
-  printf("Idade: %d\n", p.idade);
-  printf("ID: %d\n", p.ID);
-  printf("Prioridade: %s\n", (p.prioridade==0 ? "Emergência" : "Normal"));
+
+  printf("\t\t%4d | %-20.20s | %-12.12s | %3d | %02d/%02d/%04d | %-10s\n",
+         p.ID, p.nome, p.especie, p.idade,
+         p.data.dia, p.data.mes, p.data.ano,
+         (p.prioridade==0 ? "Emergência" : "Normal"));
 }
 
 int VaziaFila (Fila* f){
@@ -104,12 +103,12 @@ void InsereFila (Fila* f, Fila *p){
   if(!f) return;
   if(!p) return;
   Animal a = ler_Animal();
-  if(a.prioridade == 0){
+  if(a.prioridade == 0){ //Fila f = emergencia
       f->fim = ins_fim(f->fim, a);
   if (f->ini == NULL)       // fila estava vazia
     f->ini = f->fim;
   }
-  if(a.prioridade == 1){
+  else if(a.prioridade == 1){ //Fila p = Normal
       p->fim = ins_fim(p->fim, a);
   if (p->ini == NULL)       // fila estava vazia
     p->ini = p->fim;
@@ -124,18 +123,21 @@ void InsereFila (Fila* f, Fila *p){
   return p;
 }
 
-void RetiraFila (Fila* f, Fila *r){
+void RetiraFila (Fila* f, Fila *r, Fila *j){
+  Nos *aux;
   if(VaziaFila(f)){
-    printf("Fila vazia.\n");
-    return;
+    aux = j->ini;
+  }
+  else{
+    aux=f->ini;
   }
   
-  Animal a = f->ini->pets;
+  Animal a = aux->pets;
 
 
-  f->ini = retira_ini(f->ini);
-  if (f->ini == NULL)
-    f->fim = NULL;
+  aux = retira_ini(aux);
+  if (aux == NULL)
+   aux = NULL;
 
   if(r){ 
     r->fim = ins_fim(r->fim, a);
@@ -149,15 +151,21 @@ void RetiraFila (Fila* f, Fila *r){
 }
 
 void imprimeFila (Fila* f){
-  if(VaziaFila(f)){
-    printf("\n[Fila vazia]\n");
+  if (VaziaFila(f)){
+    printf("\n[Fila vazia]\n\n");
     return;
   }
-  printf("\n--- Fila de Animais ---\n");
+
+  printf("\n\t\tID   | NOME                 | ESPECIE      | IDD | NASCIMENTO | PRIORIDADE\n");
+  printf("\t\t-----+----------------------+--------------+-----+------------+-----------\n");
+
   for (Nos* q = f->ini; q != NULL; q = q->prox){
-    imprimir_animal(q->pets);
-    if(q->prox) printf("-----------------------\n");
+    printf("\t\t%4d | %-20.20s | %-12.12s | %3d | %02d/%02d/%04d | %-10s\n",
+           q->pets.ID, q->pets.nome, q->pets.especie, q->pets.idade,
+           q->pets.data.dia, q->pets.data.mes, q->pets.data.ano,
+           (q->pets.prioridade==0 ? "Emergência" : "Normal"));
   }
+
   printf("\n");
 }
 

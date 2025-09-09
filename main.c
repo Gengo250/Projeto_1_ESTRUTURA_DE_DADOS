@@ -26,7 +26,7 @@ do
     
   case 1:
     
-    InsereFila(Normal);
+    InsereFila(Emergencia, Normal);
     //printf("\nFila Normal (após cadastro):\n");
     //imprimeFila(Normal); //teste para debugar
     op = 0;
@@ -39,6 +39,11 @@ do
   break;
   
   case 4:
+  printf("Imprimindo a fila normal de espera: \n");
+  imprimeFila(Normal);
+  printf("Imprimindo a fila emergencial de espera:\n ");
+  imprimeFila(Emergencia);
+  op = 0;
   break;
   
   case 5:
