@@ -9,9 +9,9 @@
 int main(){
 int op;
 Animal pet;
-Fila *Normal;
-Fila *Emergencia;
-Fila *Removidos;
+Fila *Normal = CriaFila();
+Fila *Emergencia = CriaFila();
+Fila *Removidos = CriaFila();
 
 do
 {
@@ -27,17 +27,23 @@ do
   case 1:
     
     InsereFila(Normal);
-    imprimir_animal(pet);
-
+    //printf("\nFila Normal (após cadastro):\n");
+    //imprimeFila(Normal); //teste para debugar
+    op = 0;
   break;
+
   case 2:
   break;
+
   case 3:
   break;
+  
   case 4:
   break;
+  
   case 5:
   break;
+  
   case 6:
   break;
   
