@@ -5,17 +5,12 @@
 
 /* FUNÇÕES DE MANIPULAÇÃO DE FILA
 
-Fila* CriaFila()  CRIA A FILA
-
-int VaziaFila (Fila* f) VERIFICA SE A FILA ESTÃO VAZIA RETORNA 1 QUANDO ESTÃO VAZIA
-
-void InsereFila (Fila* f, int v) INSERÇÃO
-
-int RetiraFila (Fila* f) REMOÇÃO
-
-Fila* liberaFila (Fila* f) LIBERA A FILA
-
-void imprimeFila (Fila* f)IMPRIME A FILA
+Fila* CriaFila()                       // CRIA A FILA
+int VaziaFila (Fila* f)                // VERIFICA SE A FILA ESTÁ VAZIA
+void InsereFila (Fila* f)              // INSERÇÃO (lê Animal com ler_Animal)
+void RetiraFila (Fila* f, Fila *r)     // REMOÇÃO (opcionalmente move p/ fila r)
+Fila* liberaFila (Fila* f)             // LIBERA A FILA
+void imprimeFila (Fila* f)             // IMPRIME A FILA
 */
 
 typedef struct data{
@@ -31,102 +26,21 @@ typedef struct{
   Data data;
 } Animal;
 
-typedef struct nos
-{
-    Animal pets;
-    struct nos *prox;
-}Nos;
+typedef struct nos{
+  Animal pets;
+  struct nos *prox;
+} Nos;
 
-typedef struct fila
-{
-    Nos * ini;
-    Nos * fim;
+typedef struct fila{
+  Nos *ini;
+  Nos *fim;
 } Fila;
-
-int VaziaFila (Fila* f)
-{
-    if (f->ini==NULL) return 1;
-    return 0;
-
-}
-
-
-Fila* CriaFila ()
-{
-    Fila* f = (Fila*) malloc(sizeof(Fila));
-    f->ini = f->fim = NULL;
-    return f;
-}
-
-Nos* ins_fim (Nos *fim, Animal a)
-{
-    Nos *p = (Nos*)malloc(sizeof(Nos));
-    p->pets = a;
-    p->prox = NULL;
-    if (fim != NULL) /* verifica se lista n�o estava vazia */
-    fim->prox = p;
-    return p;
-}
-
-void InsereFila (Fila* f)
-{
-
-    f->fim = ins_fim(f->fim,ler_Animal());
-    if (f->ini==NULL) /* fila antes vazia? */
-    f->ini = f->fim;
-}
-
-Nos* retira_ini (Nos* ini)
-{
-    Nos* p = ini->prox;
-    free(ini);
-    return p;
-}
-
-void RetiraFila (Fila* f,Fila *r)
-{
-    Nos *aux = r->ini;
-    if (VaziaFila(f))
-    {
-        printf("Fila vazia.\n");
-        exit(0); /* aborta programa */
-    }
-    InsereFila(r);
-    f->ini = retira_ini(f->ini);
-    if (f->ini == NULL) /* fila ficou vazia? */
-    f->fim = NULL;
-}
-
-void imprimeFila (Fila* f)
-{
-    Nos* q;
-    printf("\n\t\t");
-    for (q=f->ini; q!=NULL; q=q->prox)
-    {
-        printf("%d - ",q->pets);
-    }
-    printf("\n");
-}
-
-
-Fila* liberaFila (Fila* f)
-{
-    Nos* q = f->ini;
-    while (q!=NULL)
-    {
-        Nos* t = q->prox;
-        free(q);
-        q = t;
-    }
-    free(f);
-    return NULL;
-}
-
 
 
 void limpaTela(){
   system("clear");
 }
+
 
 Animal ler_Animal(){
   Animal pets;
@@ -137,8 +51,8 @@ Animal ler_Animal(){
   printf("Digite a data de nascimento (dd mm aaaa):\n");
   scanf("%d %d %d", &pets.data.dia, &pets.data.mes, &pets.data.ano);
 
-  printf("Digite a especie do pet: ");
-  scanf(" %49[^\n]", &pets.especie);
+  printf("Digite a especie do pet:\n");
+  scanf(" %29[^\n]", pets.especie); 
 
   printf("Digite a idade do pet: ");
   scanf("%d", &pets.idade);
@@ -146,19 +60,102 @@ Animal ler_Animal(){
   printf("Digite a prioridade (0 - Emergencia || 1 - Normal): ");
   scanf("%d", &pets.prioridade);
 
+
   return pets;
 }
 
 void imprimir_animal(Animal p){
-  printf("\nNome: %s\nData: %2d/%2d/%4d\n", p.nome, p.data.dia, p.data.mes, p.data.ano);
+  printf("Nome: %s\n", p.nome);
+  printf("Nascimento: %02d/%02d/%04d\n", p.data.dia, p.data.mes, p.data.ano);
+  printf("Espécie: %s\n", p.especie);
+  printf("Idade: %d\n", p.idade);
+  printf("Prioridade: %s\n", (p.prioridade==0 ? "Emergência" : "Normal"));
 }
 
+int VaziaFila (Fila* f){
+  return (f == NULL || f->ini == NULL) ? 1 : 0;
+}
+
+Fila* CriaFila (){
+  Fila* f = (Fila*) malloc(sizeof(Fila));
+  if(!f) return NULL;
+  f->ini = f->fim = NULL;
+  return f;
+}
+
+/* insere nó no fim, devolvendo o novo ponteiro fim */
+static Nos* ins_fim (Nos *fim, Animal a){
+  Nos *p = (Nos*)malloc(sizeof(Nos));
+  if(!p) return fim;        // sem memória: mantém fim antigo
+  p->pets = a;
+  p->prox = NULL;
+  if (fim != NULL)          // se já havia nó no fim, encadeia
+    fim->prox = p;
+  return p;                 // novo fim da fila
+}
+
+void InsereFila (Fila* f){
+  if(!f) return;
+  Animal a = ler_Animal();
+  f->fim = ins_fim(f->fim, a);
+  if (f->ini == NULL)       // fila estava vazia
+    f->ini = f->fim;
+}
+
+static Nos* retira_ini (Nos* ini){
+  if(!ini) return NULL;
+  Nos* p = ini->prox;
+  free(ini);
+  return p;
+}
+
+void RetiraFila (Fila* f, Fila *r){
+  if(VaziaFila(f)){
+    printf("Fila vazia.\n");
+    return;
+  }
+  
+  Animal a = f->ini->pets;
 
 
+  f->ini = retira_ini(f->ini);
+  if (f->ini == NULL)
+    f->fim = NULL;
 
+  if(r){ 
+    r->fim = ins_fim(r->fim, a);
+    if (r->ini == NULL)
+      r->ini = r->fim;
+  }else{ 
+    printf("\nRemovido:\n");
+    imprimir_animal(a);
+    printf("\n");
+  }
+}
 
+void imprimeFila (Fila* f){
+  if(VaziaFila(f)){
+    printf("\n[Fila vazia]\n");
+    return;
+  }
+  printf("\n--- Fila de Animais ---\n");
+  for (Nos* q = f->ini; q != NULL; q = q->prox){
+    imprimir_animal(q->pets);
+    if(q->prox) printf("-----------------------\n");
+  }
+  printf("\n");
+}
 
+Fila* liberaFila (Fila* f){
+  if(!f) return NULL;
+  Nos* q = f->ini;
+  while (q != NULL){
+    Nos* t = q->prox;
+    free(q);
+    q = t;
+  }
+  free(f);
+  return NULL;
+}
 
-
-
-#endif 
+#endif
