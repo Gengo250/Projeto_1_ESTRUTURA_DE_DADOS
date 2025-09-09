@@ -2,6 +2,7 @@
 #define Bibliotecas_Include
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 /* FUNÇÕES DE MANIPULAÇÃO DE FILA
 
@@ -12,6 +13,7 @@ void RetiraFila (Fila* f, Fila *r)     // REMOÇÃO (opcionalmente move p/ fila 
 Fila* liberaFila (Fila* f)             // LIBERA A FILA
 void imprimeFila (Fila* f)             // IMPRIME A FILA
 */
+
 
 typedef struct data{
   int dia, mes, ano;
@@ -60,6 +62,9 @@ Animal ler_Animal(){
   printf("Digite a prioridade (0 - Emergencia || 1 - Normal): ");
   scanf("%d", &pets.prioridade);
 
+  srand((unsigned)time(NULL)); 
+  pets.ID = 100 + rand() % 900;
+
 
   return pets;
 }
@@ -69,6 +74,7 @@ void imprimir_animal(Animal p){
   printf("Nascimento: %02d/%02d/%04d\n", p.data.dia, p.data.mes, p.data.ano);
   printf("Espécie: %s\n", p.especie);
   printf("Idade: %d\n", p.idade);
+  printf("ID: %d\n", p.ID);
   printf("Prioridade: %s\n", (p.prioridade==0 ? "Emergência" : "Normal"));
 }
 
@@ -84,9 +90,9 @@ Fila* CriaFila (){
 }
 
 /* insere nó no fim, devolvendo o novo ponteiro fim */
-static Nos* ins_fim (Nos *fim, Animal a){
+ Nos* ins_fim (Nos *fim, Animal a){
   Nos *p = (Nos*)malloc(sizeof(Nos));
-  if(!p) return fim;        // sem memória: mantém fim antigo
+  if(!p) return fim;        
   p->pets = a;
   p->prox = NULL;
   if (fim != NULL)          // se já havia nó no fim, encadeia
@@ -102,7 +108,7 @@ void InsereFila (Fila* f){
     f->ini = f->fim;
 }
 
-static Nos* retira_ini (Nos* ini){
+ Nos* retira_ini (Nos* ini){
   if(!ini) return NULL;
   Nos* p = ini->prox;
   free(ini);
