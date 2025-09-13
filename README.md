@@ -17,7 +17,17 @@ Autor: Miguel de Castilho Gengo (Gengo250)
 
 <h1 align="center">Gerenciamento de Atendimento em Clínica Veterinária</h1>
 <p align="center"><em>Projeto prático de Estruturas de Dados em C (filas, ponteiros e memória dinâmica) com ênfase em priorização por emergência.</em></p>
+## 12. Autores & Colaboradores
 
+<!-- Alternativa com badges (opcional) -->
+## ✍️ AUTORES DO PROJETO
+<p align="center">
+  <a href="https://github.com/Gengo250"><img alt="Gengo250" src="https://img.shields.io/badge/GitHub-Gengo250-181717?logo=github"></a>
+  &nbsp;
+  <a href="https://github.com/danielwu05"><img alt="danielwu05" src="https://img.shields.io/badge/GitHub-danielwu05-181717?logo=github"></a>
+  &nbsp;
+  <a href="https://github.com/LuccasZibordi"><img alt="LuccasZibordi" src="https://img.shields.io/badge/GitHub-LuccasZibordi-181717?logo=github"></a>
+</p>
 ---
 
 ## 📑 Sumário
@@ -261,15 +271,6 @@ Este projeto é distribuído sob a licença **MIT**. Consulte o arquivo `LICENSE
 - Professora Lúcia da disciplina de **Estruturas de Dados**.  
 - Colegas de time pelo esforço conjunto e revisão de código.
 
-## 12. Autores & Colaboradores
 
-<!-- Alternativa com badges (opcional) -->
-<p align="center">
-  <a href="https://github.com/Gengo250"><img alt="Gengo250" src="https://img.shields.io/badge/GitHub-Gengo250-181717?logo=github"></a>
-  &nbsp;
-  <a href="https://github.com/danielwu05"><img alt="danielwu05" src="https://img.shields.io/badge/GitHub-danielwu05-181717?logo=github"></a>
-  &nbsp;
-  <a href="https://github.com/LuccasZibordi"><img alt="LuccasZibordi" src="https://img.shields.io/badge/GitHub-LuccasZibordi-181717?logo=github"></a>
-</p>
 
 ---
