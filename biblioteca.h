@@ -6,15 +6,6 @@
 #include <locale.h>
 #include <string.h>
 
-/* FUNÇÕES DE MANIPULAÇÃO DE FILA
-
-Fila* CriaFila()                       // CRIA A FILA
-int VaziaFila (Fila* f)                // VERIFICA SE A FILA ESTÁ VAZIA
-void InsereFila (Fila* f)              // INSERÇÃO (lê Animal com ler_Animal)
-void RetiraFila (Fila* f, Fila *r)     // REMOÇÃO (opcionalmente move p/ fila r)
-Fila* liberaFila (Fila* f)             // LIBERA A FILA
-void imprimeFila (Fila* f)             // IMPRIME A FILA
-*/
 
 typedef struct data{
   int dia, mes, ano;
@@ -132,41 +123,7 @@ void InsereFila (Fila* f, Fila *p){
   return p;
 }
 
-<<<<<<< HEAD
-int RetiraFila (Fila* f, Fila* p, Fila* j)
-{
-  if (VaziaFila(f) && VaziaFila(p))
-  {
-  printf("Filas vazias.\n");
-  exit(0); /* aborta programa */
-  }
-  Animal a = f->ini->pets;
-  f->ini = retira_ini(f->ini);
-  if (f->ini == NULL) /* fila ficou vazia? */
-  f->fim = NULL;
-}
 
-void imprimeFila (Fila* f){
-  if (VaziaFila(f)){
-    printf("\n[Fila vazia]\n\n");
-    return;
-  }
-
-  printf("\n\t\tID   | NOME                 | ESPECIE      | IDD | NASCIMENTO | PRIORIDADE\n");
-  printf("\t\t-----+----------------------+--------------+-----+------------+-----------\n");
-
-  for (Nos* q = f->ini; q != NULL; q = q->prox){
-    printf("\t\t%4d | %-20.20s | %-12.12s | %3d | %02d/%02d/%04d | %-10s\n",
-           q->pets.ID, q->pets.nome, q->pets.especie, q->pets.idade,
-           q->pets.data.dia, q->pets.data.mes, q->pets.data.ano,
-           (q->pets.prioridade==0 ? "Emergência" : "Normal"));
-  }
-
-  printf("\n");
-}
-=======
-
->>>>>>> origin/miguel
 
 Fila* liberaFila (Fila* f){
   if(!f) return NULL;
@@ -218,33 +175,6 @@ void Teste (Fila *emer, Fila* norm, Fila* remo) {
 
 }
 
-
-
-void RetiraFila (Fila* f, Fila *j, Fila *r){
-  Nos *aux;
-  if(VaziaFila(f)){
-    aux = j->ini;
-  }
-  else{
-    aux=f->ini;
-  }
-  Animal a = aux->pets;
-  aux = retira_ini(aux);
-  if (aux == NULL) {
-    aux = NULL;
-  }
-  if(r != NULL){
-    r->fim = ins_fim(r->fim, a);
-    if (r->ini == NULL){
-        r->ini = r->fim;
-    }
-  }
-  else{
-    printf("\nRemovido:\n");
-    imprimir_animal(a);
-    printf("\n");
-  }
-}
 
 void imprimeFila (Fila* f){
   if (VaziaFila(f)){

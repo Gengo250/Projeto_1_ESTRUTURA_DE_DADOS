@@ -7,16 +7,6 @@ Autor: Miguel de Castilho Gengo (Gengo250)
 <!--           BANNERS             -->
 <!-- ============================== -->
 
-<!-- Banner para modo ESCURO -->
-<p align="center">
-  <img src="assets/banners/header-dark.png#gh-dark-mode-only" alt="Banner do Projeto — Modo Escuro" width="100%">
-</p>
-
-<!-- Banner para modo CLARO -->
-<p align="center">
-  <img src="assets/banners/header-light.png#gh-light-mode-only" alt="Banner do Projeto — Modo Claro" width="100%">
-</p>
-
 <!-- Badges (exemplos, ajuste conforme seu setup) -->
 <p align="center">
   <a href="#"><img alt="C Language" src="https://img.shields.io/badge/lang-C-blue.svg"></a>
@@ -123,49 +113,27 @@ Cada elemento da fila é armazenado em um **nó** com ponteiro para o **próximo
 
 ## 6. Arquitetura do Código
 
-### 6.1. Arquivo `biblioteca.h`
-- **Includes** esperados: `<stdio.h>`, `<stdlib.h>`, `<time.h>`, `<locale.h>`, `<string.h>`.  
-- **Tipos (sugestivo)**:
-  - `Data { int dia, mes, ano; }`
-  - `Animal { int id; char nome[51]; char especie[31]; int idade; Data nasc; int prioridade; /* 0=Emerg, 1=Normal */ }`
-  - `Nos { Animal pets; struct nos *prox; }`
-  - `Fila { Nos *ini, *fim; }`
-- **Protótipos usuais**:
-  - `Fila* CriaFila(void);`
-  - `int VaziaFila(Fila* f);`
-  - `void InsereFila(Fila* f, Animal a);`
-  - `int  RetiraFila(Fila* f, Animal* out);`
-  - `Fila* liberaFila(Fila* f);`
-  - `void imprimeFila(Fila* f);`
-  - Utilitários: `imprimeRotulo()`, `imprimeNo(Nos*)`, `geraIDUnico(...)`, `procuraNome(...)` / `procuraID(...)`.
+### 6.1. Arquivo `biblioteca.h` (atualizado)
 
-> Observação: ajuste esta lista para refletir exatamente suas assinaturas atuais.
+**Includes utilizados:** `<stdio.h>`, `<stdlib.h>`, `<time.h>`, `<locale.h>`, `<string.h>`
 
-### 6.2. Arquivo `main.c`
-- **Inicialização** de locale/semente (quando aplicável).  
-- Criação das filas: `Normal`, `Emergencia`, `Removidos/Atendidos`.  
-- Laço principal com **menu** e **opções 1–7**, encerrando com `do { ... } while (op != 7);`  
-- Encaminhamento das opções para funções de **cadastro**, **atendimento**, **busca** e **relatório**.
-
----
-
-## 7. Estruturas de Dados
+**Definições de tipos (exatas do código):**
 ```c
-typedef struct {
+typedef struct data{
   int dia, mes, ano;
 } Data;
 
-typedef struct {
-  int  id;                 // 100-999 (único)
-  char nome[51];           // até 50 chars
-  char especie[31];        // "cachorro", "gato", etc.
+typedef struct{
+  char nome[50];
+  int  ID;
   int  idade;
-  Data nasc;
-  int  prioridade;         // 0=Emergência, 1=Normal
+  int  prioridade;   /* 0 = Emergência | 1 = Normal */
+  char especie[30];
+  Data data;         /* Data de nascimento */
 } Animal;
 
 typedef struct nos{
-  Animal     pets;
+  Animal      pets;
   struct nos *prox;
 } Nos;
 
@@ -175,23 +143,61 @@ typedef struct fila{
 } Fila;
 ```
 
----
+**Funções implementadas (assinaturas atuais):**
+```c
+/* Impressão formatada */
+void  imprimeRotulo(void);
+void  imprimeNo(Nos *q);
 
-## 8. Principais Operações e Complexidade
+/* Utilitários de E/S e UI */
+void    limpaTela(void);
+Animal  ler_Animal(void);
+void    imprimir_animal(Animal p);
 
-| Operação                       | Descrição                                              | Complexidade |
-|--------------------------------|--------------------------------------------------------|--------------|
-| `CriaFila`                     | Inicializa ponteiros `ini=fim=NULL`.                  | O(1)         |
-| `VaziaFila`                    | Retorna `ini==NULL`.                                   | O(1)         |
-| `InsereFila` (enqueue)         | Insere nó no **fim** usando ponteiro `fim`.           | O(1)         |
-| `RetiraFila` (dequeue)         | Remove nó do **início** e ajusta `ini`.               | O(1)         |
-| `imprimeFila`                  | Percorre nós e imprime campos.                         | O(n)         |
-| `procuraNome` / `procuraID`    | Busca linear nos nós (ambas filas, e/ou atendidos).   | O(n)         |
-| `geraIDUnico`                  | Depende da estratégia (ver §10).                      | O(1) a O(k)  |
+/* Operações de fila */
+int    VaziaFila(Fila *f);
+Fila*  CriaFila(void);
+Nos*   ins_fim(Nos *fim, Animal a);   /* insere nó no fim e retorna o novo fim */
+void   InsereFila(Fila *f, Fila *p);  /* lê Animal e enfileira em Emergência (f) ou Normal (p) */
 
----
+/* Remoção (nível de nó e nível de fila) */
+Nos*   retira_ini(Nos *ini);
+Fila*  liberaFila(Fila *f);
+Animal RetiraElemento(Fila *f);
 
-## 9. Fluxo de Execução (Visão de Uso)
+/* Rotina de atendimento e registro */
+void   Teste(Fila *emer, Fila *norm, Fila *remo);
+
+/* Impressão */
+void   imprimeFila(Fila *f);
+
+/* Buscas */
+Fila*  procuraID   (Fila *emer, Fila *norm, Fila *remo, int   id);
+Fila*  procuraNome (Fila *emer, Fila *norm, Fila *remo, char *nome);
+```
+
+**Comportamento e contratos (resumo):**
+- `InsereFila(f, p)`: lê um `Animal` via `ler_Animal()`. Se `prioridade==0`, enfileira em **Emergência** (`f`); se `prioridade==1`, enfileira em **Normal** (`p`).  
+- `ins_fim(fim, a)`: aloca nó, encadeia ao último (se existir) e **retorna o novo ponteiro `fim`**.  
+- `retira_ini(ini)`: desaloca o primeiro nó e **retorna o novo início**.  
+- `RetiraElemento(f)`: remove do **início** da fila `f` e devolve o `Animal`.  
+- `Teste(emer, norm, remo)`: escolhe a fila não vazia (prefere **Emergência**), remove um `Animal` e, se `remo` for não nula, armazena-o como **atendido**.  
+- `imprimeFila(f)`: imprime cabeçalho e percorre todos os nós.  
+- `liberaFila(f)`: libera **todos os nós** e a própria fila.  
+- `procuraID` / `procuraNome`: procuram sequencialmente em **Emergência**, **Normal** e **Removidos**, imprimem o registro quando encontrado e informam se já foi atendido.
+
+> 🔎 **Sobre IDs aleatórios:** `ler_Animal()` usa `srand((unsigned)time(NULL))` e `ID = 100 + rand() % 900;`. Isso **não garante unicidade** e pode repetir valores se várias inserções ocorrerem no mesmo segundo. Veja a seção de “Geração de IDs” para uma estratégia de unicidade (ex.: tabela `bool seen[1000]` ou verificação nas três filas antes de aceitar um novo ID).
+
+**Pontos de atenção (melhorias sem quebrar a interface):**
+- **srand**: inicialize **uma vez no `main`** (`srand((unsigned)time(NULL));`) e **remova** de `ler_Animal()` para evitar repetir a mesma semente.  
+- **`procuraID`/`procuraNome`**: as funções têm retorno `Fila*`, mas **não retornam** valor ao final. Ideal: retornar a **fila onde achou** ou `NULL`; se preferir, mude para `void`.  
+- **`Teste`**: alterações em `emer`/`norm` dentro da função **não atualizam** as filas do chamador (ponteiros passados por valor). Se precisar refletir mudanças, use `Fila **`.  
+- **Portabilidade**: `limpaTela()` usa `system("clear")` (Unix). Em Windows seria `cls`. Considere detectar o SO ou evitar `system()`.  
+- **Organização**: mover implementações para um `.c` (ex.: `fila.c`) e manter apenas **protótipos** no `.h` evita múltiplas definições em projetos maiores.  
+- **Guarda de inclusão**: o macro `Bibliotecas_Include` funciona, mas é comum padronizar como `BIBLIOTECA_H` ou similar.
+
+
+## 7. Fluxo de Execução (Visão de Uso)
 
 1) **Inserir Pet**  
 - Ler dados + gerar **ID único**.  
@@ -214,7 +220,7 @@ typedef struct fila{
 
 ---
 
-## 10. Geração de IDs Únicos (100–999)
+## 8. Geração de IDs Únicos (100–999)
 
 **Exigência:** ID aleatório no intervalo **[100, 999]** e **não repetido**.
 
@@ -235,85 +241,24 @@ srand((unsigned)time(NULL)); // uma vez, no início do programa
 
 ---
 
-## 11. Compilação e Execução
-
-### Linux (gcc)
-```bash
-gcc main.c -o clinic -Wall -Wextra -O2
-./clinic
-```
-
-### Windows (MinGW)
-```bash
-gcc main.c -o clinic.exe -Wall -Wextra -O2
-clinic.exe
-```
-
-> **Observação:** Se separar em múltiplos `.c/.h`, lembre-se de compilar todos os arquivos:
-> `gcc main.c fila.c utils.c -o clinic -Wall -Wextra -O2`
-
----
-
-## 12. Testes e Casos de Uso
-
-- **Inserção em lote**: cadastrar 10+ pets com prioridades variadas.  
-- **Atendimento com prioridade**: verificar que **Emergência** sempre é atendida **antes**.  
-- **Busca por nome**: inserir nomes repetidos e confirmar **impressão de todos**.  
-- **ID único**: tentar forçar colisões e inspecionar a **tabela de vistos**.  
-- **Relatórios**: conferir formatos e **alinhamento** das colunas.  
-- **Robustez de entrada**: validar inteiros, strings e datas (limites de tamanho e faixa).
-
-> **Ferramentas úteis (Linux):**  
-> - *Valgrind*: `valgrind --leak-check=full ./clinic` para checar vazamentos.  
-> - *AddressSanitizer*: `-fsanitize=address -fno-omit-frame-pointer` na compilação.
-
----
-
-## 13. Organização do Repositório
+## 9. Organização do Repositório
 ```
 .
 ├── main.c
 ├── biblioteca.h
-├── assets/
-│   └── banners/
-│       ├── header-dark.png     # sugerido: 1600×380 px | tema escuro
-│       └── header-light.png    # sugerido: 1600×380 px | tema claro
 └── README.md
 ```
 
----
-
-## 14. Boas Práticas e Qualidade
-- **Checagem de erros**: toda alocação (`malloc`) deve ser verificada.  
-- **Encapsulamento**: funções para entrada/validação (`ler_Animal`, `validaData`, etc.).  
-- **Saída formatada**: padronizar `imprimeRotulo()` e `imprimeNo()`; largura fixa de colunas.  
-- **Warnings zero**: compilar com `-Wall -Wextra` e resolver avisos.  
-- **Liberação de memória**: `liberaFila()` varrendo nós com `free`.  
-- **Estilo**: nomes consistentes, comentários sucintos, responsabilidades claras por função.
 
 ---
 
-## 15. Limitações e Trabalhos Futuros
-- **Persistência**: atualmente em memória — pode-se incluir **salvar/carregar** em arquivo.  
-- **Datas e validação robusta**: tratar meses de 30/31 dias e anos bissextos com mais rigor.  
-- **Relatórios avançados**: exportar para **CSV**/**JSON**; filtros por espécie/idade.  
-- **Métricas**: tempo médio de espera, contagem por prioridade, histórico por dia.  
-- **Interface**: migrar para **UI** (ncurses) ou **front-end** simples com **sockets**.
-
----
-
-## 16. Licença
+## 10. Licença
 Este projeto é distribuído sob a licença **MIT**. Consulte o arquivo `LICENSE` (opcional).
 
 ---
 
-## 17. Agradecimentos
-- Professores e monitores da disciplina de **Estruturas de Dados**.  
+## 11. Agradecimentos
+- Professora Lúcia da disciplina de **Estruturas de Dados**.  
 - Colegas de time pelo esforço conjunto e revisão de código.
 
 ---
-
-<!-- Rodapé com mini banner opcional -->
-<p align="center">
-  <img src="assets/banners/footer-strip.png" alt="Rodapé" width="60%">
-</p>
