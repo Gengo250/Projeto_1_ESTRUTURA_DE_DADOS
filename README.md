@@ -224,11 +224,6 @@ srand((unsigned)time(NULL)); // uma vez, no início do programa
 
 ---
 
-## 10. Licença
-Este projeto é distribuído sob a licença **MIT**. Consulte o arquivo `LICENSE` (opcional).
-
----
-
 ## 11. Agradecimentos
 - Professora Lúcia da disciplina de **Estruturas de Dados**.  
 - Colegas de time pelo esforço conjunto e revisão de código.
