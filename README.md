@@ -30,34 +30,6 @@ Autor: Miguel de Castilho Gengo (Gengo250)
 
 ---
 
-## 📑 Sumário
-- [1. Resumo](#1-resumo)
-- [2. Contexto Acadêmico](#2-contexto-acadêmico)
-- [3. Objetivos](#3-objetivos)
-- [4. Fundamentação Teórica](#4-fundamentação-teórica)
-  - [4.1. Filas (Queues)](#41-filas-queues)
-  - [4.2. Listas Encadeadas e Nós](#42-listas-encadeadas-e-nós)
-  - [4.3. Ponteiros e Memória Dinâmica](#43-ponteiros-e-memória-dinâmica)
-  - [4.4. Geração de Números Aleatórios e Semente](#44-geração-de-números-aleatórios-e-semente)
-  - [4.5. Internacionalização (locale)](#45-internacionalização-locale)
-- [5. Requisitos Funcionais](#5-requisitos-funcionais)
-- [6. Arquitetura do Código](#6-arquitetura-do-código)
-  - [6.1. Arquivo `biblioteca.h`](#61-arquivo-bibliotecah)
-  - [6.2. Arquivo `main.c`](#62-arquivo-mainc)
-- [7. Estruturas de Dados](#7-estruturas-de-dados)
-- [8. Principais Operações e Complexidade](#8-principais-operações-e-complexidade)
-- [9. Fluxo de Execução (Visão de Uso)](#9-fluxo-de-execução-visão-de-uso)
-- [10. Geração de IDs Únicos (100–999)](#10-geração-de-ids-únicos-100–999)
-- [11. Compilação e Execução](#11-compilação-e-execução)
-- [12. Testes e Casos de Uso](#12-testes-e-casos-de-uso)
-- [13. Organização do Repositório](#13-organização-do-repositório)
-- [14. Boas Práticas e Qualidade](#14-boas-práticas-e-qualidade)
-- [15. Limitações e Trabalhos Futuros](#15-limitações-e-trabalhos-futuros)
-- [16. Licença](#16-licença)
-- [17. Agradecimentos](#17-agradecimentos)
-
----
-
 ## 1. Resumo
 Este repositório implementa, em **C**, um sistema de **fila de atendimento** para uma **clínica veterinária**, priorizando **emergências**. O projeto exercita **manipulação dinâmica de memória**, **ponteiros**, **listas encadeadas** e **filas**, além de **geração de números aleatórios** com **IDs únicos** para cada pet.  
 Há **duas filas** principais (Emergência e Normal) e uma estrutura para **Registros Atendidos**. O usuário interage por **menu textual**, e o sistema provê funcionalidades de **inserção**, **atendimento**, **busca** e **relatórios**.
