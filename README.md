@@ -40,7 +40,7 @@ Há **duas filas** principais (Emergência e Normal) e uma estrutura para **Regi
 - **Curso:** Engenharia de Computação  
 - **Componente Curricular:** Estruturas de Dados (Prática)  
 - **Tema:** Filas, ponteiros, memória dinâmica e geração de números aleatórios em C  
-- **Entrega:** Código-fonte em C e relatório (este README segue formato de **relatório universitário**)
+- **Entrega:** Código-fonte em C e relatório 
 
 ---
 
