@@ -123,31 +123,17 @@ void InsereFila (Fila* f, Fila *p){
   return p;
 }
 
-void RetiraFila (Fila* f, Fila *r, Fila *j){
-  Nos *aux;
-  if(VaziaFila(f)){
-    aux = j->ini;
+int RetiraFila (Fila* f, Fila* p, Fila* j)
+{
+  if (VaziaFila(f) && VaziaFila(p))
+  {
+  printf("Filas vazias.\n");
+  exit(0); /* aborta programa */
   }
-  else{
-    aux=f->ini;
-  }
-  
-  Animal a = aux->pets;
-
-
-  aux = retira_ini(aux);
-  if (aux == NULL)
-   aux = NULL;
-
-  if(r){ 
-    r->fim = ins_fim(r->fim, a);
-    if (r->ini == NULL)
-      r->ini = r->fim;
-  }else{ 
-    printf("\nRemovido:\n");
-    imprimir_animal(a);
-    printf("\n");
-  }
+  Animal a = f->ini->pets;
+  f->ini = retira_ini(f->ini);
+  if (f->ini == NULL) /* fila ficou vazia? */
+  f->fim = NULL;
 }
 
 void imprimeFila (Fila* f){
