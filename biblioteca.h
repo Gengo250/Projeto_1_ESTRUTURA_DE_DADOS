@@ -122,6 +122,8 @@ void InsereFila (Fila* f, Fila *p){
     p->ini = p->fim;
   }
 
+  printf("\n\t\tPet cadastrado com sucesso!\n\n");
+
 }
 
  Nos* retira_ini (Nos* ini){
