@@ -13,6 +13,7 @@ Fila *Emergencia = CriaFila();
 Fila *Removidos = CriaFila();
 
 
+
 do
 {
     
@@ -28,9 +29,9 @@ do
     printf("| %-60s |\n", " 7 - Sair");
     printf("+--------------------------------------------------------------+\n");
     printf("Escolha sua opcao: ");
-  scanf("%d", &op);
+    scanf("%d", &op);
 
-  //limpaTela();
+    //limpaTela();
 
   switch (op)
   {
@@ -43,7 +44,7 @@ do
   break;
 
   case 2:
-    
+      Teste(Emergencia,Normal,Removidos);
   break;
 
   case 3:
