@@ -261,4 +261,32 @@ Este projeto é distribuído sob a licença **MIT**. Consulte o arquivo `LICENSE
 - Professora Lúcia da disciplina de **Estruturas de Dados**.  
 - Colegas de time pelo esforço conjunto e revisão de código.
 
+## 12. Autores & Colaboradores
+
+<p align="center">
+  <a href="https://github.com/Gengo250" title="Miguel de Castilho Gengo (Gengo250)" style="margin: 0 16px; text-decoration:none;">
+    <img src="https://github.com/Gengo250.png" width="96" height="96" style="border-radius:50%;"><br/>
+    <sub><b>Miguel Gengo</b></sub>
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/danielwu05" title="Daniel Wu" style="margin: 0 16px; text-decoration:none;">
+    <img src="https://github.com/danielwu05.png" width="96" height="96" style="border-radius:50%;"><br/>
+    <sub><b>Daniel Wu</b></sub>
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/LuccasZibordi" title="Luccas Zibordi" style="margin: 0 16px; text-decoration:none;">
+    <img src="https://github.com/LuccasZibordi.png" width="96" height="96" style="border-radius:50%;"><br/>
+    <sub><b>Luccas Zibordi</b></sub>
+  </a>
+</p>
+
+<!-- Alternativa com badges (opcional) -->
+<p align="center">
+  <a href="https://github.com/Gengo250"><img alt="Gengo250" src="https://img.shields.io/badge/GitHub-Gengo250-181717?logo=github"></a>
+  &nbsp;
+  <a href="https://github.com/danielwu05"><img alt="danielwu05" src="https://img.shields.io/badge/GitHub-danielwu05-181717?logo=github"></a>
+  &nbsp;
+  <a href="https://github.com/LuccasZibordi"><img alt="LuccasZibordi" src="https://img.shields.io/badge/GitHub-LuccasZibordi-181717?logo=github"></a>
+</p>
+
 ---
