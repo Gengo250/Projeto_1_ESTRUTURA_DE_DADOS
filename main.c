@@ -21,7 +21,7 @@ do
   printf("Escolha sua opcao: ");
   scanf("%d", &op);
 
-  limpaTela();
+  //limpaTela();
 
   switch (op)
   {
@@ -39,9 +39,21 @@ do
 
   case 3:
       int id;
+      char nome[50];
+      int f;
+      printf("Você quer procurar pelo ID (1) ou Nome (2)");
+      scanf("%d", &f);
+      if(f == 1){
       printf("\nDigite o ID que deseja procurar: ");
       scanf("%d", &id);
       procuraID(Emergencia,Normal,Removidos,id);
+      }
+      if(f == 2 ){
+        printf("\nDigite o Nome que deseja procurar: ");
+        scanf(" %49[^\n]", nome);
+        procuraNome(Emergencia,Normal,Removidos,nome);
+      }
+      
   break;
 
   case 4:
@@ -59,15 +71,15 @@ do
   break;
 
   case 5:
-  printf("Imprimindo a fila normal de espera: \n");
-  imprimeFila(Normal);
-  printf("Imprimindo a fila emergencial de espera:\n ");
-  imprimeFila(Emergencia);
+    printf("Imprimindo a fila normal de espera: \n");
+    imprimeFila(Normal);
+    printf("Imprimindo a fila emergencial de espera:\n ");
+    imprimeFila(Emergencia);
   break;
 
   case 6:
-  printf("Imprimindo o histórico de atendimentos:\n ");
-  imprimeFila(Removidos);
+    printf("Imprimindo o histórico de atendimentos:\n ");
+    imprimeFila(Removidos);
   break;
   case 7:
     printf("BYE BYE\n");
