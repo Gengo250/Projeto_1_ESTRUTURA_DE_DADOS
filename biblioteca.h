@@ -1,8 +1,9 @@
 #ifndef Bibliotecas_Include
 #define Bibliotecas_Include
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
+#include <locale.h>
 
 /* FUNÇÕES DE MANIPULAÇÃO DE FILA
 
@@ -13,7 +14,6 @@ void RetiraFila (Fila* f, Fila *r)     // REMOÇÃO (opcionalmente move p/ fila 
 Fila* liberaFila (Fila* f)             // LIBERA A FILA
 void imprimeFila (Fila* f)             // IMPRIME A FILA
 */
-
 
 typedef struct data{
   int dia, mes, ano;
@@ -38,11 +38,21 @@ typedef struct fila{
   Nos *fim;
 } Fila;
 
-
-void limpaTela(){
-  system("clear");
+void imprimeRotulo() {
+    printf("\n\t\tID   | NOME                 | ESPECIE      | IDD | NASCIMENTO | PRIORIDADE\n");
+    printf("\t\t-----+----------------------+--------------+-----+------------+-----------\n");
 }
 
+void imprimeNo(Nos* q) {
+    printf("\t\t%4d | %-20.20s | %-12.12s | %3d | %02d/%02d/%04d | %-10s\n",
+           q->pets.ID, q->pets.nome, q->pets.especie, q->pets.idade,
+           q->pets.data.dia, q->pets.data.mes, q->pets.data.ano,
+           (q->pets.prioridade==0 ? "Emergência" : "Normal"));
+}
+
+void limpaTela(){
+  system("cls");
+}
 
 Animal ler_Animal(){
   Animal pets;
@@ -54,7 +64,7 @@ Animal ler_Animal(){
   scanf("%d %d %d", &pets.data.dia, &pets.data.mes, &pets.data.ano);
 
   printf("Digite a especie do pet:\n");
-  scanf(" %29[^\n]", pets.especie); 
+  scanf(" %29[^\n]", pets.especie);
 
   printf("Digite a idade do pet: ");
   scanf("%d", &pets.idade);
@@ -62,10 +72,8 @@ Animal ler_Animal(){
   printf("Digite a prioridade (0 - Emergencia || 1 - Normal): ");
   scanf("%d", &pets.prioridade);
 
-  srand((unsigned)time(NULL)); 
+  srand((unsigned)time(NULL));
   pets.ID = 100 + rand() % 900;
-
-
   return pets;
 }
 
@@ -91,7 +99,6 @@ Fila* CriaFila (){
 /* insere nó no fim, devolvendo o novo ponteiro fim */
  Nos* ins_fim (Nos *fim, Animal a){
   Nos *p = (Nos*)malloc(sizeof(Nos));
-  if(!p) return fim;        
   p->pets = a;
   p->prox = NULL;
   if (fim != NULL)          // se já havia nó no fim, encadeia
@@ -117,13 +124,66 @@ void InsereFila (Fila* f, Fila *p){
 }
 
  Nos* retira_ini (Nos* ini){
-  if(!ini) return NULL;
   Nos* p = ini->prox;
   free(ini);
   return p;
 }
 
-void RetiraFila (Fila* f, Fila *r, Fila *j){
+
+
+Fila* liberaFila (Fila* f){
+  if(!f) return NULL;
+  Nos* q = f->ini;
+  while (q != NULL){
+    Nos* t = q->prox;
+    free(q);
+    q = t;
+  }
+  free(f);
+  return NULL;
+}
+
+Animal RetiraElemento (Fila* f)
+{
+    Animal v;
+    if (VaziaFila(f))
+    {
+        printf("Fila vazia.\n");
+    }
+    v = f->ini->pets;
+    f->ini = retira_ini(f->ini);
+    if (f->ini == NULL) /* fila ficou vazia? */
+    f->fim = NULL;
+    return v;
+}
+
+void Teste (Fila *emer, Fila* norm, Fila* remo) {
+    Fila * aux;
+    aux = norm;
+    if (emer->fim!=NULL) {
+        aux = emer;
+    }
+
+    Animal a = RetiraElemento(aux);
+    if(remo != NULL){
+        remo->fim = ins_fim(remo->fim, a);
+        if (remo->ini == NULL){
+            remo->ini = remo->fim;
+        }
+    }
+
+    if (emer!=NULL) {
+        emer = aux;
+    }
+    else{
+        norm = aux;
+    }
+
+}
+
+
+
+void RetiraFila (Fila* f, Fila *j, Fila *r){
   Nos *aux;
   if(VaziaFila(f)){
     aux = j->ini;
@@ -131,19 +191,18 @@ void RetiraFila (Fila* f, Fila *r, Fila *j){
   else{
     aux=f->ini;
   }
-  
   Animal a = aux->pets;
-
-
   aux = retira_ini(aux);
-  if (aux == NULL)
-   aux = NULL;
-
-  if(r){ 
+  if (aux == NULL) {
+    aux = NULL;
+  }
+  if(r != NULL){
     r->fim = ins_fim(r->fim, a);
-    if (r->ini == NULL)
-      r->ini = r->fim;
-  }else{ 
+    if (r->ini == NULL){
+        r->ini = r->fim;
+    }
+  }
+  else{
     printf("\nRemovido:\n");
     imprimir_animal(a);
     printf("\n");
@@ -156,29 +215,49 @@ void imprimeFila (Fila* f){
     return;
   }
 
-  printf("\n\t\tID   | NOME                 | ESPECIE      | IDD | NASCIMENTO | PRIORIDADE\n");
-  printf("\t\t-----+----------------------+--------------+-----+------------+-----------\n");
-
+  imprimeRotulo();
   for (Nos* q = f->ini; q != NULL; q = q->prox){
-    printf("\t\t%4d | %-20.20s | %-12.12s | %3d | %02d/%02d/%04d | %-10s\n",
-           q->pets.ID, q->pets.nome, q->pets.especie, q->pets.idade,
-           q->pets.data.dia, q->pets.data.mes, q->pets.data.ano,
-           (q->pets.prioridade==0 ? "Emergência" : "Normal"));
+    imprimeNo(q);
   }
 
   printf("\n");
 }
 
-Fila* liberaFila (Fila* f){
-  if(!f) return NULL;
-  Nos* q = f->ini;
-  while (q != NULL){
-    Nos* t = q->prox;
-    free(q);
-    q = t;
-  }
-  free(f);
-  return NULL;
+
+Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
+    Nos* aux;
+    aux = emer -> ini;
+
+    while(aux != NULL) {
+        if (aux-> pets.ID == id) {
+                imprimeRotulo();
+                imprimeNo(aux);
+                printf("\nJá foi atendido? - Não");
+                break;
+        }
+        aux = aux -> prox;
+    }
+    aux = norm -> ini;
+    while(aux != NULL) {
+        if (aux->pets.ID == id) {
+                imprimeRotulo();
+                imprimeNo(aux);
+                printf("\nJá foi atendido? - Não");
+                break;
+        }
+        aux = aux -> prox;
+    }
+    aux = remo -> ini;
+    while(aux != NULL) {
+        if (aux->pets.ID == id) {
+                imprimeRotulo();
+                imprimeNo(aux);
+                printf("\nJá foi atendido? - Sim");
+                break;
+        }
+        aux = aux -> prox;
+    }
+    printf("\nO ID inserido não existe");
 }
 
 #endif
