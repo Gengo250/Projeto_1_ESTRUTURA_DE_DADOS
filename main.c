@@ -97,6 +97,8 @@ do
   break;
   
   default:
+  printf("\n\n\tOpção inválida! Por favor insira valore corretos\t\n\n");
+  break; 
   
   }
 
