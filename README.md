@@ -40,7 +40,7 @@ Há **duas filas** principais (Emergência e Normal) e uma estrutura para **Regi
 - **Curso:** Engenharia de Computação  
 - **Componente Curricular:** Estruturas de Dados (Prática)  
 - **Tema:** Filas, ponteiros, memória dinâmica e geração de números aleatórios em C  
-- **Entrega:** Código-fonte em C e relatório (este README segue formato de **relatório universitário**)
+- **Entrega:** Código-fonte em C e relatório 
 
 ---
 
@@ -168,16 +168,6 @@ Fila*  procuraNome (Fila *emer, Fila *norm, Fila *remo, char *nome);
 - `liberaFila(f)`: libera **todos os nós** e a própria fila.  
 - `procuraID` / `procuraNome`: procuram sequencialmente em **Emergência**, **Normal** e **Removidos**, imprimem o registro quando encontrado e informam se já foi atendido.
 
-> 🔎 **Sobre IDs aleatórios:** `ler_Animal()` usa `srand((unsigned)time(NULL))` e `ID = 100 + rand() % 900;`. Isso **não garante unicidade** e pode repetir valores se várias inserções ocorrerem no mesmo segundo. Veja a seção de “Geração de IDs” para uma estratégia de unicidade (ex.: tabela `bool seen[1000]` ou verificação nas três filas antes de aceitar um novo ID).
-
-**Pontos de atenção (melhorias sem quebrar a interface):**
-- **srand**: inicialize **uma vez no `main`** (`srand((unsigned)time(NULL));`) e **remova** de `ler_Animal()` para evitar repetir a mesma semente.  
-- **`procuraID`/`procuraNome`**: as funções têm retorno `Fila*`, mas **não retornam** valor ao final. Ideal: retornar a **fila onde achou** ou `NULL`; se preferir, mude para `void`.  
-- **`Teste`**: alterações em `emer`/`norm` dentro da função **não atualizam** as filas do chamador (ponteiros passados por valor). Se precisar refletir mudanças, use `Fila **`.  
-- **Portabilidade**: `limpaTela()` usa `system("clear")` (Unix). Em Windows seria `cls`. Considere detectar o SO ou evitar `system()`.  
-- **Organização**: mover implementações para um `.c` (ex.: `fila.c`) e manter apenas **protótipos** no `.h` evita múltiplas definições em projetos maiores.  
-- **Guarda de inclusão**: o macro `Bibliotecas_Include` funciona, mas é comum padronizar como `BIBLIOTECA_H` ou similar.
-
 
 ## 7. Fluxo de Execução (Visão de Uso)
 
@@ -231,11 +221,6 @@ srand((unsigned)time(NULL)); // uma vez, no início do programa
 └── README.md
 ```
 
-
----
-
-## 10. Licença
-Este projeto é distribuído sob a licença **MIT**. Consulte o arquivo `LICENSE` (opcional).
 
 ---
 
