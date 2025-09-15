@@ -34,13 +34,6 @@ Autor: Miguel de Castilho Gengo (Gengo250)
 Este repositório implementa, em **C**, um sistema de **fila de atendimento** para uma **clínica veterinária**, priorizando **emergências**. O projeto exercita **manipulação dinâmica de memória**, **ponteiros**, **listas encadeadas** e **filas**, além de **geração de números aleatórios** com **IDs únicos** para cada pet.  
 Há **duas filas** principais (Emergência e Normal) e uma estrutura para **Registros Atendidos**. O usuário interage por **menu textual**, e o sistema provê funcionalidades de **inserção**, **atendimento**, **busca** e **relatórios**.
 
----
-
-## 2. Contexto Acadêmico
-- **Curso:** Engenharia de Computação  
-- **Componente Curricular:** Estruturas de Dados (Prática)  
-- **Tema:** Filas, ponteiros, memória dinâmica e geração de números aleatórios em C  
-- **Entrega:** Código-fonte em C e relatório 
 
 ---
 
