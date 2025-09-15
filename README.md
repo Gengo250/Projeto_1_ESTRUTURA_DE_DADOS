@@ -196,15 +196,6 @@ Fila*  procuraNome (Fila *emer, Fila *norm, Fila *remo, char *nome);
 
 **Exigência:** ID aleatório no intervalo **[100, 999]** e **não repetido**.
 
-**Estratégias recomendadas:**
-- **Tabela de vistos (bool seen[1000])**:  
-  - Inicialize tudo como `false`.  
-  - Ao gerar um ID, se `seen[id]==false`, marque `true` e use.  
-  - **O(1)** por verificação; simples e eficiente.
-- **Rejeição por colisão:**  
-  - Gere e re-tente enquanto o ID já existir na estrutura (busca nas filas + atendidos).  
-  - **Custo** cresce com ocupação.
-
 **Semente:**
 ```c
 #include <time.h>
