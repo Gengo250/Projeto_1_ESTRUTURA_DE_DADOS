@@ -149,6 +149,7 @@ Animal RetiraElemento (Fila* f)
     if (VaziaFila(f))
     {
         printf("Fila vazia.\n");
+        return NULL;
     }
     v = f->ini->pets;
     f->ini = retira_ini(f->ini);
