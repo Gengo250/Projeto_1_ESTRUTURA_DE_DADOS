@@ -172,7 +172,7 @@ void Teste (Fila *emer, Fila* norm, Fila* remo) {
     else{
         norm = aux;
     }
-   printf("\nPet foi atendido com sucesso!\n");
+   printf("\n Pet %s foi atendido com sucesso!\n", a.nome);
 }
 
 
