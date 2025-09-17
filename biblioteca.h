@@ -11,7 +11,7 @@ typedef struct data{
   int dia, mes, ano;
 } Data;
 
-typedef struct{
+typedef struct animal{
   char nome[50];
   int ID;
   int idade;
