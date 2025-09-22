@@ -19,12 +19,13 @@ do
     
     printf("+--------------------------------------------------------------+\n");
     printf("| %-60s |\n","        MENU DE ATENDIMENTO AO SEU PET");
+    printf("| %-60s |\n                                        :");                  
     printf("| %-60s |\n", "");
     printf("| %-60s |\n", " 1 - Cadastrar um Pet");
     printf("| %-60s |\n", " 2 - Atender um Pet");
     printf("| %-60s |\n", " 3 - Buscar um Pet");
     printf("| %-60s |\n", " 4 - Imprimir Relatorio com todos os pets");
-    printf("| %-60s |\n", " 5 - Imprimir proximos pets atendidos");
+    printf("| %-60s |\n", " 5 - Imprimir pets a serem atendidos");
     printf("| %-60s |\n", " 6 - Imprimir todos os pets ja atendidos");
     printf("| %-60s |\n", " 7 - Sair");
     printf("+--------------------------------------------------------------+\n");
