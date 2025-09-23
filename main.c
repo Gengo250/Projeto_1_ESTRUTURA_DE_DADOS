@@ -19,6 +19,8 @@ int f,preferencia=2;
 do
 {
 
+
+
     printf("+--------------------------------------------------------------+\n");
     printf("| %-60s |\n","        MENU DE ATENDIMENTO AO SEU PET");
     printf("| %-60s |\n", "");
@@ -33,14 +35,14 @@ do
     printf("Escolha sua opcao: ");
     scanf("%d", &op);
 
-    //limpaTela();
+
 
   switch (op)
   {
 
   case 1:
 
-
+        limpaTela();
 
     while(preferencia < 0 || preferencia > 1) {
         printf("Digite a prioridade (0 - Emergencia || 1 - Normal): ");
@@ -51,10 +53,12 @@ do
   break;
 
   case 2:
+          limpaTela();
       Atendimento(Emergencia,Normal,Removidos);
   break;
 
   case 3:
+          limpaTela();
       printf("Voce quer procurar pelo ID (1) ou Nome (2)");
       scanf("%d", &f);
       if(f == 1){
@@ -71,6 +75,7 @@ do
   break;
 
   case 4:
+
         printf("\nNormal: ");
         imprimeFila(Normal);
         printf("--------------------------------------");
@@ -85,6 +90,7 @@ do
   break;
 
   case 5:
+          limpaTela();
     printf("Imprimindo a fila normal de espera: \n");
     imprimeFila(Normal);
     printf("Imprimindo a fila emergencial de espera:\n ");
@@ -92,15 +98,18 @@ do
   break;
 
   case 6:
+          limpaTela();
     printf("Imprimindo o histórico de atendimentos:\n ");
     imprimeFila(Removidos);
   break;
   case 7:
+          limpaTela();
     printf("\t\t\n\nOBRIGADO POR ESCOLHER NOSSO ATENDIMENTO\n");
 
   break;
 
   default:
+          limpaTela();
   printf("\n\n\tOpçao invalida! Por favor insira valore corretos\t\n\n");
   break;
 

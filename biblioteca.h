@@ -43,7 +43,7 @@ void imprimeNo(Nos* q) {
 }
 
 void limpaTela(){
-  system("clear");
+  system("cls");
 }
 
 Animal ler_Animal(){
@@ -139,7 +139,7 @@ Animal RetiraElemento (Fila* f)
     }
     v = f->ini->pets;
     f->ini = retira_ini(f->ini);
-    if (f->ini == NULL) /* fila ficou vazia? */
+    if (f->ini == NULL)
     f->fim = NULL;
     return v;
 }
