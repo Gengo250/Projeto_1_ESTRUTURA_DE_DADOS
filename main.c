@@ -11,12 +11,14 @@ Animal pet;
 Fila *Normal = CriaFila();
 Fila *Emergencia = CriaFila();
 Fila *Removidos = CriaFila();
-
+int id;
+char nome[50];
+int f,preferencia=2;
 
 
 do
 {
-    
+
     printf("+--------------------------------------------------------------+\n");
     printf("| %-60s |\n","        MENU DE ATENDIMENTO AO SEU PET");
     printf("| %-60s |\n", "");
@@ -38,20 +40,22 @@ do
 
   case 1:
 
-    InsereFila(Emergencia, Normal);
-    //imprimeFila(Normal); //teste para debugar
+
+
+    while(preferencia < 0 || preferencia > 1) {
+        printf("Digite a prioridade (0 - Emergencia || 1 - Normal): ");
+        scanf("%d", &preferencia);
+        (preferencia == 1) ? (InsereFila(Normal, preferencia)) : (InsereFila(Emergencia, preferencia));
+    }
 
   break;
 
   case 2:
-      Teste(Emergencia,Normal,Removidos);
+      Atendimento(Emergencia,Normal,Removidos);
   break;
 
   case 3:
-      int id;
-      char nome[50];
-      int f;
-      printf("Você quer procurar pelo ID (1) ou Nome (2)");
+      printf("Voce quer procurar pelo ID (1) ou Nome (2)");
       scanf("%d", &f);
       if(f == 1){
       printf("\nDigite o ID que deseja procurar: ");
@@ -63,7 +67,7 @@ do
         scanf(" %49[^\n]", nome);
         procuraNome(Emergencia,Normal,Removidos,nome);
       }
-      
+
   break;
 
   case 4:
@@ -93,13 +97,13 @@ do
   break;
   case 7:
     printf("\t\t\n\nOBRIGADO POR ESCOLHER NOSSO ATENDIMENTO\n");
-    
+
   break;
-  
+
   default:
-  printf("\n\n\tOpção inválida! Por favor insira valore corretos\t\n\n");
-  break; 
-  
+  printf("\n\n\tOpçao invalida! Por favor insira valore corretos\t\n\n");
+  break;
+
   }
 
 } while (op != 7);
