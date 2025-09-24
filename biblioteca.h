@@ -4,16 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <locale.h>
+#include <string.h>
 
-/* FUNÇÕES DE MANIPULAÇÃO DE FILA
-
-Fila* CriaFila()                       // CRIA A FILA
-int VaziaFila (Fila* f)                // VERIFICA SE A FILA ESTÁ VAZIA
-void InsereFila (Fila* f)              // INSERÇÃO (lê Animal com ler_Animal)
-void RetiraFila (Fila* f, Fila *r)     // REMOÇÃO (opcionalmente move p/ fila r)
-Fila* liberaFila (Fila* f)             // LIBERA A FILA
-void imprimeFila (Fila* f)             // IMPRIME A FILA
-*/
 
 typedef struct data{
   int dia, mes, ano;
@@ -39,7 +31,7 @@ typedef struct fila{
 } Fila;
 
 void imprimeRotulo() {
-    printf("\n\t\tID   | NOME                 | ESPECIE      | IDD | NASCIMENTO | PRIORIDADE\n");
+    printf("\n\t\tID   | NOME                 | ESPECIE      | IDADE | NASCIMENTO | PRIORIDADE\n");
     printf("\t\t-----+----------------------+--------------+-----+------------+-----------\n");
 }
 
@@ -51,7 +43,7 @@ void imprimeNo(Nos* q) {
 }
 
 void limpaTela(){
-  system("cls");
+  system("clear");
 }
 
 Animal ler_Animal(){
@@ -110,7 +102,7 @@ void InsereFila (Fila* f, Fila *p){
   if(!f) return;
   if(!p) return;
   Animal a = ler_Animal();
-  if(a.prioridade == 0){ //Fila f = emergencia
+  if(a.prioridade == 0){    //Fila f = emergencia
       f->fim = ins_fim(f->fim, a);
   if (f->ini == NULL)       // fila estava vazia
     f->ini = f->fim;
@@ -120,6 +112,8 @@ void InsereFila (Fila* f, Fila *p){
   if (p->ini == NULL)       // fila estava vazia
     p->ini = p->fim;
   }
+
+  printf("\n\t\tPet cadastrado com sucesso!\n\n");
 
 }
 
@@ -149,7 +143,6 @@ Animal RetiraElemento (Fila* f)
     if (VaziaFila(f))
     {
         printf("Fila vazia.\n");
-        return NULL;
     }
     v = f->ini->pets;
     f->ini = retira_ini(f->ini);
@@ -179,36 +172,9 @@ void Teste (Fila *emer, Fila* norm, Fila* remo) {
     else{
         norm = aux;
     }
-
+   printf("\nPet foi atendido com sucesso!\n");
 }
 
-
-
-void RetiraFila (Fila* f, Fila *j, Fila *r){
-  Nos *aux;
-  if(VaziaFila(f)){
-    aux = j->ini;
-  }
-  else{
-    aux=f->ini;
-  }
-  Animal a = aux->pets;
-  aux = retira_ini(aux);
-  if (aux == NULL) {
-    aux = NULL;
-  }
-  if(r != NULL){
-    r->fim = ins_fim(r->fim, a);
-    if (r->ini == NULL){
-        r->ini = r->fim;
-    }
-  }
-  else{
-    printf("\nRemovido:\n");
-    imprimir_animal(a);
-    printf("\n");
-  }
-}
 
 void imprimeFila (Fila* f){
   if (VaziaFila(f)){
@@ -229,12 +195,15 @@ Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
     Nos* aux;
     aux = emer -> ini;
 
-    while(aux != NULL) {
-        if (aux-> pets.ID == id) {
+
+     while(aux != NULL) {
+        if (aux->pets.ID == id) {
                 imprimeRotulo();
                 imprimeNo(aux);
-                printf("\nJá foi atendido? - Não");
+                printf("\nJá foi atendido? - Não\n");
                 break;
+        }else {
+          printf("\nID não existe\n");
         }
         aux = aux -> prox;
     }
@@ -243,8 +212,10 @@ Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
         if (aux->pets.ID == id) {
                 imprimeRotulo();
                 imprimeNo(aux);
-                printf("\nJá foi atendido? - Não");
+                printf("\nJá foi atendido? - Não\n");
                 break;
+        } else {
+          printf("\nID não existe\n");
         }
         aux = aux -> prox;
     }
@@ -253,12 +224,59 @@ Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
         if (aux->pets.ID == id) {
                 imprimeRotulo();
                 imprimeNo(aux);
-                printf("\nJá foi atendido? - Sim");
+                printf("\nJá foi atendido? - Sim\n");
                 break;
+        } else {
+          printf("\nID não existe\n");
+        }
+        aux = aux -> prox;
+     }
+
+
+}
+Fila * procuraNome (Fila * emer, Fila * norm, Fila * remo , char *nome) {
+    Nos* aux;
+    aux = emer -> ini;
+
+
+     while(aux != NULL) {
+        if (strcmp(aux->pets.nome, nome) == 0) {
+                imprimeRotulo();
+                imprimeNo(aux);
+                printf("\nJá foi atendido? - Não\n");
+                break;
+        }else {
+          printf("\nNome não existe\n");
         }
         aux = aux -> prox;
     }
-    printf("\nO ID inserido não existe");
+    aux = norm -> ini;
+    while(aux != NULL) {
+        if (strcmp(aux->pets.nome, nome) == 0) {
+                imprimeRotulo();
+                imprimeNo(aux);
+                printf("\nJá foi atendido? - Não\n");
+                break;
+        } else {
+          printf("\nNome não existe\n");
+        }
+        aux = aux -> prox;
+    }
+    aux = remo -> ini;
+    while(aux != NULL) {
+        if (strcmp(aux->pets.nome, nome) == 0) {
+                imprimeRotulo();
+                imprimeNo(aux);
+                printf("\nJá foi atendido? - Sim\n");
+                break;
+        } else {
+          printf("\nNome não existe\n");
+        }
+        aux = aux -> prox;
+     }
+
+
 }
+
 
 #endif
