@@ -47,15 +47,16 @@ void limpaTela(){
 }
 
 Animal ler_Animal(){
+
+    struct tm *hoje;
+
+    time_t segundos;
+
+    time(&segundos);
+
+    hoje = localtime(&segundos);
+
   Animal pets;
-
-  Data hoje;
-
-  hoje.ano=2025;
-  hoje.dia=24;
-  hoje.mes=9;
-
-
 
   printf("\nDigite o nome do pet:\n");
   scanf(" %49[^\n]", pets.nome);
@@ -63,21 +64,14 @@ Animal ler_Animal(){
   do {
     printf("Digite a data de nascimento (dd mm aaaa):\n");
     scanf("%d %d %d", &pets.data.dia, &pets.data.mes, &pets.data.ano);
-  }while(pets.data.dia>31 || pets.data.dia <1 || pets.data.mes <1 || pets.data.mes>12 || pets.data.ano<1990 || pets.data.ano >hoje.ano || (pets.data.dia>hoje.dia && pets.data.mes>=hoje.mes));
+  }while(pets.data.dia>31 || pets.data.dia <1 || pets.data.mes <1 || pets.data.mes>12 || pets.data.ano<1990 || pets.data.ano >hoje->tm_year+1900 || (pets.data.dia>hoje->tm_mday && pets.data.mes>=hoje->tm_mon+1));
 
   printf("Digite a especie do pet:\n");
   scanf(" %29[^\n]", pets.especie);
 
-  /*
-
-  printf("Digite a idade do pet: ");
-  scanf("%d", &pets.idade);
-
-  */
-
     pets.idade = 2024-pets.data.ano;
 
-    if(pets.data.mes<9 || (pets.data.mes==9 && pets.data.dia<=24)) {
+    if(pets.data.mes<hoje->tm_mon+1 || (pets.data.mes==hoje->tm_mon+1 && pets.data.dia<=hoje->tm_mday)) {
         pets.idade++;
     }
 

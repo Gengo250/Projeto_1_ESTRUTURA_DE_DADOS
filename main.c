@@ -14,13 +14,8 @@ Fila *Removidos = CriaFila();
 int id;
 char nome[50];
 int f,preferencia=2;
-
-
 do
 {
-
-
-
     printf("+--------------------------------------------------------------+\n");
     printf("| %-60s |\n","        MENU DE ATENDIMENTO AO SEU PET");
     printf("| %-60s |\n", "");
@@ -34,19 +29,11 @@ do
     printf("+--------------------------------------------------------------+\n");
     printf("Escolha sua opcao: ");
     scanf("%d", &op);
-
-
-
   switch (op)
   {
-
   case 1:
-
         limpaTela();
-
      do{
-
-
         printf("Digite a prioridade (0 - Emergencia || 1 - Normal): ");
         scanf("%d", &preferencia);
 
@@ -84,54 +71,39 @@ do
                 printf("\nEscolha invalida.\n");
             }
         }while(f<1 || f>2);
-
-
   break;
-
   case 4:
-
         printf("\nNormal: ");
         imprimeFila(Normal);
         printf("--------------------------------------");
-
         printf("\nEmergencia: ");
         imprimeFila(Emergencia);
         printf("--------------------------------------");
-
         printf("\nAtendidos: ");
         imprimeFila(Removidos);
-
   break;
-
   case 5:
-          limpaTela();
-    printf("Imprimindo a fila normal de espera: \n");
-    imprimeFila(Normal);
-    printf("Imprimindo a fila emergencial de espera:\n ");
-    imprimeFila(Emergencia);
+        limpaTela();
+        printf("Imprimindo a fila normal de espera: \n");
+        imprimeFila(Normal);
+        printf("Imprimindo a fila emergencial de espera:\n ");
+        imprimeFila(Emergencia);
   break;
 
   case 6:
-          limpaTela();
-    printf("Imprimindo o histórico de atendimentos:\n ");
-    imprimeFila(Removidos);
+        limpaTela();
+        printf("Imprimindo o histórico de atendimentos:\n ");
+        imprimeFila(Removidos);
   break;
   case 7:
           limpaTela();
     printf("\t\t\n\nOBRIGADO POR ESCOLHER NOSSO ATENDIMENTO\n");
-
   break;
-
   default:
           limpaTela();
   printf("\n\n\tOpçao invalida! Por favor insira valore corretos\t\n\n");
   break;
-
   }
-
 } while (op != 7);
-
-
   return 0;
 }
-
