@@ -172,7 +172,11 @@ void Teste (Fila *emer, Fila* norm, Fila* remo) {
     else{
         norm = aux;
     }
+<<<<<<< HEAD
    printf("\nO pet %s foi atendido com sucesso!\n",a.nome);
+=======
+   printf("\nPet foi atendido com sucesso!\n");
+>>>>>>> a94f96ce1816be99168e8d7ac9497585e0e74aec
 }
 
 
@@ -195,7 +199,11 @@ Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
     Nos* aux;
     aux = emer -> ini;
 
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> a94f96ce1816be99168e8d7ac9497585e0e74aec
      while(aux != NULL) {
         if (aux->pets.ID == id) {
                 imprimeRotulo();
@@ -231,14 +239,23 @@ Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
         }
         aux = aux -> prox;
      }
+<<<<<<< HEAD
     
     
+=======
+
+
+>>>>>>> a94f96ce1816be99168e8d7ac9497585e0e74aec
 }
 Fila * procuraNome (Fila * emer, Fila * norm, Fila * remo , char *nome) {
     Nos* aux;
     aux = emer -> ini;
 
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> a94f96ce1816be99168e8d7ac9497585e0e74aec
      while(aux != NULL) {
         if (strcmp(aux->pets.nome, nome) == 0) {
                 imprimeRotulo();
@@ -274,8 +291,13 @@ Fila * procuraNome (Fila * emer, Fila * norm, Fila * remo , char *nome) {
         }
         aux = aux -> prox;
      }
+<<<<<<< HEAD
     
     
+=======
+
+
+>>>>>>> a94f96ce1816be99168e8d7ac9497585e0e74aec
 }
 
 

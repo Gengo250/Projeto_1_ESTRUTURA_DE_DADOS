@@ -16,16 +16,26 @@ Fila *Removidos = CriaFila();
 
 do
 {
+<<<<<<< HEAD
     
     printf("+--------------------------------------------------------------+\n");
     printf("| %-60s |\n","        MENU DE ATENDIMENTO AO SEU PET");
     printf("| %-60s |\n                                        :");                  
+=======
+
+    printf("+--------------------------------------------------------------+\n");
+    printf("| %-60s |\n","        MENU DE ATENDIMENTO AO SEU PET");
+>>>>>>> a94f96ce1816be99168e8d7ac9497585e0e74aec
     printf("| %-60s |\n", "");
     printf("| %-60s |\n", " 1 - Cadastrar um Pet");
     printf("| %-60s |\n", " 2 - Atender um Pet");
     printf("| %-60s |\n", " 3 - Buscar um Pet");
     printf("| %-60s |\n", " 4 - Imprimir Relatorio com todos os pets");
+<<<<<<< HEAD
     printf("| %-60s |\n", " 5 - Imprimir pets a serem atendidos");
+=======
+    printf("| %-60s |\n", " 5 - Imprimir proximos pets atendidos");
+>>>>>>> a94f96ce1816be99168e8d7ac9497585e0e74aec
     printf("| %-60s |\n", " 6 - Imprimir todos os pets ja atendidos");
     printf("| %-60s |\n", " 7 - Sair");
     printf("+--------------------------------------------------------------+\n");
@@ -64,7 +74,11 @@ do
         scanf(" %49[^\n]", nome);
         procuraNome(Emergencia,Normal,Removidos,nome);
       }
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> a94f96ce1816be99168e8d7ac9497585e0e74aec
   break;
 
   case 4:
@@ -91,16 +105,28 @@ do
   case 6:
     printf("Imprimindo o histórico de atendimentos:\n ");
     imprimeFila(Removidos);
+<<<<<<< HEAD
   break;
   case 7:
     printf("\t\t\n\nOBRIGADO POR ESCOLHER NOSSO ATENDIMENTO\n");
     
+=======
+>>>>>>> a94f96ce1816be99168e8d7ac9497585e0e74aec
   break;
-  
+  case 7:
+    printf("\t\t\n\nOBRIGADO POR ESCOLHER NOSSO ATENDIMENTO\n");
+
+  break;
+
   default:
   printf("\n\n\tOpção inválida! Por favor insira valore corretos\t\n\n");
+<<<<<<< HEAD
   break; 
   
+=======
+  break;
+
+>>>>>>> a94f96ce1816be99168e8d7ac9497585e0e74aec
   }
 
 } while (op != 7);
@@ -108,4 +134,7 @@ do
 
   return 0;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> a94f96ce1816be99168e8d7ac9497585e0e74aec
