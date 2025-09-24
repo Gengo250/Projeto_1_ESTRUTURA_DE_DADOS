@@ -44,11 +44,19 @@ do
 
         limpaTela();
 
-    while(preferencia < 0 || preferencia > 1) {
+     do{
+
+
         printf("Digite a prioridade (0 - Emergencia || 1 - Normal): ");
         scanf("%d", &preferencia);
-        (preferencia == 1) ? (InsereFila(Normal, preferencia)) : (InsereFila(Emergencia, preferencia));
-    }
+
+        if(preferencia == 0 || preferencia == 1) {
+            (preferencia == 1) ? (InsereFila(Normal, preferencia)) : (InsereFila(Emergencia, preferencia));
+        }
+        else{
+            printf("\nPrioridade invalida.\n");
+        }
+    }while(preferencia < 0 || preferencia > 1);
 
   break;
 
@@ -58,19 +66,25 @@ do
   break;
 
   case 3:
-          limpaTela();
-      printf("Voce quer procurar pelo ID (1) ou Nome (2)");
-      scanf("%d", &f);
-      if(f == 1){
-      printf("\nDigite o ID que deseja procurar: ");
-      scanf("%d", &id);
-      procuraID(Emergencia,Normal,Removidos,id);
-      }
-      if(f == 2 ){
-        printf("\nDigite o Nome que deseja procurar: ");
-        scanf(" %49[^\n]", nome);
-        procuraNome(Emergencia,Normal,Removidos,nome);
-      }
+        limpaTela();
+        do{
+            printf("Voce quer procurar pelo ID (1) ou Nome (2): ");
+            scanf("%d", &f);
+            if(f == 1){
+                printf("\nDigite o ID que deseja procurar: ");
+                scanf("%d", &id);
+                procuraID(Emergencia,Normal,Removidos,id);
+            }
+            if(f == 2){
+                printf("\nDigite o Nome que deseja procurar: ");
+                scanf(" %49[^\n]", nome);
+                procuraNome(Emergencia,Normal,Removidos,nome);
+            }
+            else {
+                printf("\nEscolha invalida.\n");
+            }
+        }while(f<1 || f>2);
+
 
   break;
 

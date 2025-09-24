@@ -49,17 +49,37 @@ void limpaTela(){
 Animal ler_Animal(){
   Animal pets;
 
+  Data hoje;
+
+  hoje.ano=2025;
+  hoje.dia=24;
+  hoje.mes=9;
+
+
+
   printf("\nDigite o nome do pet:\n");
   scanf(" %49[^\n]", pets.nome);
 
-  printf("Digite a data de nascimento (dd mm aaaa):\n");
-  scanf("%d %d %d", &pets.data.dia, &pets.data.mes, &pets.data.ano);
+  do {
+    printf("Digite a data de nascimento (dd mm aaaa):\n");
+    scanf("%d %d %d", &pets.data.dia, &pets.data.mes, &pets.data.ano);
+  }while(pets.data.dia>31 || pets.data.dia <1 || pets.data.mes <1 || pets.data.mes>12 || pets.data.ano<1990 || pets.data.ano >hoje.ano || (pets.data.dia>hoje.dia && pets.data.mes>=hoje.mes));
 
   printf("Digite a especie do pet:\n");
   scanf(" %29[^\n]", pets.especie);
 
+  /*
+
   printf("Digite a idade do pet: ");
   scanf("%d", &pets.idade);
+
+  */
+
+    pets.idade = 2024-pets.data.ano;
+
+    if(pets.data.mes<9 || (pets.data.mes==9 && pets.data.dia<=24)) {
+        pets.idade++;
+    }
 
   srand((unsigned)time(NULL));
   pets.ID = 100 + rand() % 900;
@@ -238,9 +258,9 @@ Fila * procuraNome (Fila * emer, Fila * norm, Fila * remo , char *nome) {
                 imprimeNo(aux);
                 printf("\nJa foi atendido? - Nao\n");
                 break;
-        }else {
+        }/*else {
           printf("\nNome nao existe\n");
-        }
+        }*/
         aux = aux -> prox;
     }
     aux = norm -> ini;
@@ -250,9 +270,9 @@ Fila * procuraNome (Fila * emer, Fila * norm, Fila * remo , char *nome) {
                 imprimeNo(aux);
                 printf("\nJa foi atendido? - Nao\n");
                 break;
-        } else {
+        }/* else {
           printf("\nNome nao existe\n");
-        }
+        }*/
         aux = aux -> prox;
     }
     aux = remo -> ini;
@@ -262,9 +282,9 @@ Fila * procuraNome (Fila * emer, Fila * norm, Fila * remo , char *nome) {
                 imprimeNo(aux);
                 printf("\nJa foi atendido? - Sim\n");
                 break;
-        } else {
+        } /*else {
           printf("\nNome nao existe\n");
-        }
+        }*/
         aux = aux -> prox;
      }
 
