@@ -53,7 +53,7 @@ do
   break;
 
   case 3:
-        limpaTela();
+        
         do{
             printf("Voce quer procurar pelo ID (1) ou Nome (2): ");
             scanf("%d", &f);
