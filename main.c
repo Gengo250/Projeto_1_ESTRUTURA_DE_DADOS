@@ -3,6 +3,7 @@
 #include <time.h>
 #include <locale.h>
 #include "biblioteca.h"
+#include <ctype.h>
 
 int main(){
 setlocale(LC_ALL, "Portuguese");
@@ -54,23 +55,21 @@ do
 
   case 3:
         limpaTela();
-        do{
+        do {
             printf("Voce quer procurar pelo ID (1) ou Nome (2): ");
             scanf("%d", &f);
-            if(f == 1){
-                printf("\nDigite o ID que deseja procurar: ");
-                scanf("%d", &id);
-                procuraID(Emergencia,Normal,Removidos,id);
-            }
-            if(f == 2){
-                printf("\nDigite o Nome que deseja procurar: ");
-                scanf(" %49[^\n]", nome);
-                procuraNome(Emergencia,Normal,Removidos,nome);
-            }
-            else {
-                printf("\nEscolha invalida.\n");
-            }
         }while(f<1 || f>2);
+
+        if(f == 1){
+            printf("\nDigite o ID que deseja procurar: ");
+            scanf("%d", &id);
+            procuraID(Emergencia,Normal,Removidos,id);
+        }
+        else{
+            printf("\nDigite o Nome que deseja procurar: ");
+            scanf(" %49[^\n]", nome);
+            procuraNome(Emergencia,Normal,Removidos,nome);
+        }
   break;
   case 4:
         printf("\nNormal: ");

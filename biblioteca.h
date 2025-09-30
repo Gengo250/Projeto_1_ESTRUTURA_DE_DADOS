@@ -192,8 +192,6 @@ void imprimeFila (Fila* f){
 Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
     Nos* aux;
     aux = emer -> ini;
-
-
      while(aux != NULL) {
         if (aux->pets.ID == id) {
                 imprimeRotulo();
@@ -229,14 +227,10 @@ Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
         }
         aux = aux -> prox;
      }
-
-
 }
 Fila * procuraNome (Fila * emer, Fila * norm, Fila * remo , char *nome) {
     Nos* aux;
     aux = emer -> ini;
-
-
      while(aux != NULL) {
         if (strcmp(aux->pets.nome, nome) == 0) {
                 imprimeRotulo();
