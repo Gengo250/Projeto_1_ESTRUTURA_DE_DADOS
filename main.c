@@ -11,12 +11,11 @@ Animal pet;
 Fila *Normal = CriaFila();
 Fila *Emergencia = CriaFila();
 Fila *Removidos = CriaFila();
-
-
-
+int id;
+char nome[50];
+int f,preferencia=2;
 do
 {
-    
     printf("+--------------------------------------------------------------+\n");
     printf("| %-60s |\n","        MENU DE ATENDIMENTO AO SEU PET");
     printf("| %-60s |\n", "");
@@ -30,81 +29,81 @@ do
     printf("+--------------------------------------------------------------+\n");
     printf("Escolha sua opcao: ");
     scanf("%d", &op);
-
-    //limpaTela();
-
   switch (op)
   {
-
   case 1:
+        limpaTela();
+     do{
+        printf("Digite a prioridade (0 - Emergencia || 1 - Normal): ");
+        scanf("%d", &preferencia);
 
-    InsereFila(Emergencia, Normal);
-    //imprimeFila(Normal); //teste para debugar
+        if(preferencia == 0 || preferencia == 1) {
+            (preferencia == 1) ? (InsereFila(Normal, preferencia)) : (InsereFila(Emergencia, preferencia));
+        }
+        else{
+            printf("\nPrioridade invalida.\n");
+        }
+    }while(preferencia < 0 || preferencia > 1);
 
   break;
 
   case 2:
-      Teste(Emergencia,Normal,Removidos);
+          limpaTela();
+      Atendimento(Emergencia,Normal,Removidos);
   break;
 
   case 3:
-      int id;
-      char nome[50];
-      int f;
-      printf("Você quer procurar pelo ID (1) ou Nome (2)");
-      scanf("%d", &f);
-      if(f == 1){
-      printf("\nDigite o ID que deseja procurar: ");
-      scanf("%d", &id);
-      procuraID(Emergencia,Normal,Removidos,id);
-      }
-      if(f == 2 ){
-        printf("\nDigite o Nome que deseja procurar: ");
-        scanf(" %49[^\n]", nome);
-        procuraNome(Emergencia,Normal,Removidos,nome);
-      }
-      
+        limpaTela();
+        do{
+            printf("Voce quer procurar pelo ID (1) ou Nome (2): ");
+            scanf("%d", &f);
+            if(f == 1){
+                printf("\nDigite o ID que deseja procurar: ");
+                scanf("%d", &id);
+                procuraID(Emergencia,Normal,Removidos,id);
+            }
+            if(f == 2){
+                printf("\nDigite o Nome que deseja procurar: ");
+                scanf(" %49[^\n]", nome);
+                procuraNome(Emergencia,Normal,Removidos,nome);
+            }
+            else {
+                printf("\nEscolha invalida.\n");
+            }
+        }while(f<1 || f>2);
   break;
-
   case 4:
         printf("\nNormal: ");
         imprimeFila(Normal);
         printf("--------------------------------------");
-
         printf("\nEmergencia: ");
         imprimeFila(Emergencia);
         printf("--------------------------------------");
-
         printf("\nAtendidos: ");
         imprimeFila(Removidos);
-
   break;
-
   case 5:
-    printf("Imprimindo a fila normal de espera: \n");
-    imprimeFila(Normal);
-    printf("Imprimindo a fila emergencial de espera:\n ");
-    imprimeFila(Emergencia);
+        limpaTela();
+        printf("Imprimindo a fila normal de espera: \n");
+        imprimeFila(Normal);
+        printf("Imprimindo a fila emergencial de espera:\n ");
+        imprimeFila(Emergencia);
   break;
 
   case 6:
-    printf("Imprimindo o histórico de atendimentos:\n ");
-    imprimeFila(Removidos);
+        limpaTela();
+        printf("Imprimindo o histórico de atendimentos:\n ");
+        imprimeFila(Removidos);
   break;
   case 7:
+          limpaTela();
     printf("\t\t\n\nOBRIGADO POR ESCOLHER NOSSO ATENDIMENTO\n");
-    
   break;
-  
   default:
-  printf("\n\n\tOpção inválida! Por favor insira valore corretos\t\n\n");
-  break; 
-  
+          limpaTela();
+  printf("\n\n\tOpçao invalida! Por favor insira valore corretos\t\n\n");
+  break;
   }
-
 } while (op != 7);
-
-
   return 0;
 }
-

@@ -36,49 +36,57 @@ void imprimeRotulo() {
 }
 
 void imprimeNo(Nos* q) {
-    printf("\t\t%4d | %-20.20s | %-12.12s | %3d | %02d/%02d/%04d | %-10s\n",
+    printf("\t\t%4d | %-20.20s | %-12.12s | %3d | %02d/%02d/%04d | %-10d\n",
            q->pets.ID, q->pets.nome, q->pets.especie, q->pets.idade,
            q->pets.data.dia, q->pets.data.mes, q->pets.data.ano,
-           (q->pets.prioridade==0 ? "Emergência" : "Normal"));
+           q->pets.prioridade);
 }
 
 void limpaTela(){
-  system("clear");
+  system("cls");
 }
 
 Animal ler_Animal(){
+
+    struct tm *hoje;
+
+    time_t segundos;
+
+    time(&segundos);
+
+    hoje = localtime(&segundos);
+
   Animal pets;
 
   printf("\nDigite o nome do pet:\n");
   scanf(" %49[^\n]", pets.nome);
 
-  printf("Digite a data de nascimento (dd mm aaaa):\n");
-  scanf("%d %d %d", &pets.data.dia, &pets.data.mes, &pets.data.ano);
+  do {
+    printf("Digite a data de nascimento (dd mm aaaa):\n");
+    scanf("%d %d %d", &pets.data.dia, &pets.data.mes, &pets.data.ano);
+  }while(pets.data.dia>31 || pets.data.dia <1 || pets.data.mes <1 || pets.data.mes>12 || pets.data.ano<1990 || pets.data.ano >hoje->tm_year+1900 || (pets.data.dia>hoje->tm_mday && pets.data.mes>=hoje->tm_mon+1));
 
   printf("Digite a especie do pet:\n");
   scanf(" %29[^\n]", pets.especie);
 
-  printf("Digite a idade do pet: ");
-  scanf("%d", &pets.idade);
+    pets.idade = 2024-pets.data.ano;
 
-  printf("Digite a prioridade (0 - Emergencia || 1 - Normal): ");
-  scanf("%d", &pets.prioridade);
+    if(pets.data.mes<hoje->tm_mon+1 || (pets.data.mes==hoje->tm_mon+1 && pets.data.dia<=hoje->tm_mday)) {
+        pets.idade++;
+    }
 
   srand((unsigned)time(NULL));
   pets.ID = 100 + rand() % 900;
   return pets;
 }
 
-void imprimir_animal(Animal p){
-
-  printf("\t\t%4d | %-20.20s | %-12.12s | %3d | %02d/%02d/%04d | %-10s\n",
-         p.ID, p.nome, p.especie, p.idade,
-         p.data.dia, p.data.mes, p.data.ano,
-         (p.prioridade==0 ? "Emergência" : "Normal"));
-}
-
 int VaziaFila (Fila* f){
-  return (f == NULL || f->ini == NULL) ? 1 : 0;
+  if (f == NULL || f->ini == NULL) {
+      return 1;
+  }
+  else {
+    return 0;
+  }
 }
 
 Fila* CriaFila (){
@@ -88,33 +96,24 @@ Fila* CriaFila (){
   return f;
 }
 
-/* insere nó no fim, devolvendo o novo ponteiro fim */
+
  Nos* ins_fim (Nos *fim, Animal a){
   Nos *p = (Nos*)malloc(sizeof(Nos));
   p->pets = a;
   p->prox = NULL;
-  if (fim != NULL)          // se já havia nó no fim, encadeia
+  if (fim != NULL)
     fim->prox = p;
-  return p;                 // novo fim da fila
+  return p;
 }
 
-void InsereFila (Fila* f, Fila *p){
-  if(!f) return;
-  if(!p) return;
-  Animal a = ler_Animal();
-  if(a.prioridade == 0){    //Fila f = emergencia
-      f->fim = ins_fim(f->fim, a);
-  if (f->ini == NULL)       // fila estava vazia
-    f->ini = f->fim;
-  }
-  else if(a.prioridade == 1){ //Fila p = Normal
-      p->fim = ins_fim(p->fim, a);
-  if (p->ini == NULL)       // fila estava vazia
-    p->ini = p->fim;
-  }
-
-  printf("\n\t\tPet cadastrado com sucesso!\n\n");
-
+void InsereFila (Fila* f, int prio){
+        Animal a = ler_Animal();
+        a.prioridade=prio;
+        f->fim = ins_fim(f->fim, a);
+        if (f->ini == NULL){
+            f->ini = f->fim;
+        }
+        printf("\n\t\tPet cadastrado com sucesso!\n\n");
 }
 
  Nos* retira_ini (Nos* ini){
@@ -146,12 +145,12 @@ Animal RetiraElemento (Fila* f)
     }
     v = f->ini->pets;
     f->ini = retira_ini(f->ini);
-    if (f->ini == NULL) /* fila ficou vazia? */
+    if (f->ini == NULL)
     f->fim = NULL;
     return v;
 }
 
-void Teste (Fila *emer, Fila* norm, Fila* remo) {
+void Atendimento (Fila *emer, Fila* norm, Fila* remo) {
     Fila * aux;
     aux = norm;
     if (emer->fim!=NULL) {
@@ -177,17 +176,16 @@ void Teste (Fila *emer, Fila* norm, Fila* remo) {
 
 
 void imprimeFila (Fila* f){
-  if (VaziaFila(f)){
-    printf("\n[Fila vazia]\n\n");
-    return;
+  if (VaziaFila(f)==0){
+        imprimeRotulo();
+        for (Nos* q = f->ini; q != NULL; q = q->prox){
+        imprimeNo(q);
   }
-
-  imprimeRotulo();
-  for (Nos* q = f->ini; q != NULL; q = q->prox){
-    imprimeNo(q);
-  }
-
   printf("\n");
+  }
+  else {
+    printf("\n[Fila vazia]\n\n");
+  }
 }
 
 
@@ -195,15 +193,15 @@ Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
     Nos* aux;
     aux = emer -> ini;
 
-   
+
      while(aux != NULL) {
         if (aux->pets.ID == id) {
                 imprimeRotulo();
                 imprimeNo(aux);
-                printf("\nJá foi atendido? - Não\n");
+                printf("\nJa foi atendido? - Nao\n");
                 break;
         }else {
-          printf("\nID não existe\n");
+          printf("\nID nao existe\n");
         }
         aux = aux -> prox;
     }
@@ -212,10 +210,10 @@ Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
         if (aux->pets.ID == id) {
                 imprimeRotulo();
                 imprimeNo(aux);
-                printf("\nJá foi atendido? - Não\n");
+                printf("\nJa foi atendido? - Nao\n");
                 break;
         } else {
-          printf("\nID não existe\n");
+          printf("\nID nao existe\n");
         }
         aux = aux -> prox;
     }
@@ -224,29 +222,27 @@ Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
         if (aux->pets.ID == id) {
                 imprimeRotulo();
                 imprimeNo(aux);
-                printf("\nJá foi atendido? - Sim\n");
+                printf("\nJa foi atendido? - Sim\n");
                 break;
         } else {
-          printf("\nID não existe\n");
+          printf("\nID nao existe\n");
         }
         aux = aux -> prox;
      }
-    
-    
+
+
 }
 Fila * procuraNome (Fila * emer, Fila * norm, Fila * remo , char *nome) {
     Nos* aux;
     aux = emer -> ini;
 
-   
+
      while(aux != NULL) {
         if (strcmp(aux->pets.nome, nome) == 0) {
                 imprimeRotulo();
                 imprimeNo(aux);
-                printf("\nJá foi atendido? - Não\n");
+                printf("\nJa foi atendido? - Nao\n");
                 break;
-        }else {
-          printf("\nNome não existe\n");
         }
         aux = aux -> prox;
     }
@@ -255,10 +251,8 @@ Fila * procuraNome (Fila * emer, Fila * norm, Fila * remo , char *nome) {
         if (strcmp(aux->pets.nome, nome) == 0) {
                 imprimeRotulo();
                 imprimeNo(aux);
-                printf("\nJá foi atendido? - Não\n");
+                printf("\nJa foi atendido? - Nao\n");
                 break;
-        } else {
-          printf("\nNome não existe\n");
         }
         aux = aux -> prox;
     }
@@ -267,15 +261,13 @@ Fila * procuraNome (Fila * emer, Fila * norm, Fila * remo , char *nome) {
         if (strcmp(aux->pets.nome, nome) == 0) {
                 imprimeRotulo();
                 imprimeNo(aux);
-                printf("\nJá foi atendido? - Sim\n");
+                printf("\nJa foi atendido? - Sim\n");
                 break;
-        } else {
-          printf("\nNome não existe\n");
         }
         aux = aux -> prox;
      }
-    
-    
+
+
 }
 
 
