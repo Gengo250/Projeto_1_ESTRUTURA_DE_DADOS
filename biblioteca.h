@@ -88,8 +88,10 @@ void imprimir_animal(Animal p){
          (p.prioridade==0 ? "Emergencia" : "Normal"));
 }
 
-int VaziaFila (Fila* f){
-  return (f == NULL || f->ini == NULL) ? 1 : 0;
+int VaziaFila (Fila* f)
+{
+  if (f->ini==NULL) return 1;
+  return 0;
 }
 
 Fila* CriaFila (){
