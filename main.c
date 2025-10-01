@@ -3,7 +3,6 @@
 #include <time.h>
 #include <locale.h>
 #include "biblioteca.h"
-#include <ctype.h>
 
 int main(){
 setlocale(LC_ALL, "Portuguese");
@@ -59,7 +58,6 @@ do
             printf("Voce quer procurar pelo ID (1) ou Nome (2): ");
             scanf("%d", &f);
         }while(f<1 || f>2);
-
         if(f == 1){
             printf("\nDigite o ID que deseja procurar: ");
             scanf("%d", &id);

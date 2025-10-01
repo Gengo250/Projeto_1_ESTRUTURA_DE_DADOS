@@ -64,7 +64,7 @@ Animal ler_Animal(){
   do {
     printf("Digite a data de nascimento (dd mm aaaa):\n");
     scanf("%d %d %d", &pets.data.dia, &pets.data.mes, &pets.data.ano);
-  }while(pets.data.dia>31 || pets.data.dia <1 || pets.data.mes <1 || pets.data.mes>12 || pets.data.ano<1990 || pets.data.ano >hoje->tm_year+1900 || (pets.data.dia>hoje->tm_mday && pets.data.mes>=hoje->tm_mon+1));
+  }while(pets.data.dia>31 || pets.data.dia <1 || pets.data.mes <1 || pets.data.mes>12 || pets.data.ano<1990 || pets.data.ano >hoje->tm_year+1900 || (pets.data.dia>hoje->tm_mday && pets.data.mes>=hoje->tm_mon+1 && pets.data.ano>hoje->tm_year+1900));
 
   printf("Digite a especie do pet:\n");
   scanf(" %29[^\n]", pets.especie);
