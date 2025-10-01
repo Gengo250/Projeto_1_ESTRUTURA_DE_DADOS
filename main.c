@@ -13,7 +13,8 @@ Fila *Emergencia = CriaFila();
 Fila *Removidos = CriaFila();
 int id;
 char nome[50];
-int f,preferencia=2;
+int f;
+int preferencia;
 do
 {
     printf("+--------------------------------------------------------------+\n");
