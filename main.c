@@ -6,7 +6,7 @@
 
 int main(){
 setlocale(LC_ALL, "Portuguese");
-int op;
+int op, existe;
 Animal pet;
 Fila *Normal = CriaFila();
 Fila *Emergencia = CriaFila();
@@ -62,12 +62,34 @@ do
         if(f == 1){
             printf("\nDigite o ID que deseja procurar: ");
             scanf("%d", &id);
-            procuraID(Emergencia,Normal,Removidos,id);
+            existe = procuraID(Emergencia,id);
+            existe = procuraID(Normal,id);
+            if ( existe==1) {
+                printf("Foi Atendido? - Nao\n");
+            }
+            existe = procuraID(Removidos,id);
+            if (existe == 1) {
+                printf("Foi Atendido? - Sim\n");
+            }
+            else {
+                printf("ID digitado nao existe.\n");
+            }
         }
         else{
             printf("\nDigite o Nome que deseja procurar: ");
             scanf(" %49[^\n]", nome);
-            procuraNome(Emergencia,Normal,Removidos,nome);
+            existe = procuraNome(Emergencia,nome);
+            existe = procuraNome(Normal,nome);
+            if ( existe ==1) {
+                printf("Foi Atendido? - Nao\n");
+            }
+            existe = procuraNome(Removidos,nome);
+            if (existe == 1) {
+                printf("Foi Atendido? - Sim\n");
+            }
+            else {
+                printf("Nome digitado nao existe.\n");
+            }
         }
   break;
   case 4:

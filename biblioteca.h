@@ -142,6 +142,7 @@ Animal RetiraElemento (Fila* f)
     if (VaziaFila(f))
     {
         printf("Fila vazia.\n");
+        return v;
     }
     v = f->ini->pets;
     f->ini = retira_ini(f->ini);
@@ -189,79 +190,34 @@ void imprimeFila (Fila* f){
 }
 
 
-Fila * procuraID (Fila * emer, Fila * norm, Fila * remo , int id) {
+int procuraID (Fila * fila, int id) {
     Nos* aux;
-    aux = emer -> ini;
+    int existe =0;
+    aux = fila -> ini;
      while(aux != NULL) {
         if (aux->pets.ID == id) {
                 imprimeRotulo();
                 imprimeNo(aux);
-                printf("\nJa foi atendido? - Nao\n");
-                break;
-        }else {
-          printf("\nID nao existe\n");
+                existe = 1;
         }
         aux = aux -> prox;
     }
-    aux = norm -> ini;
-    while(aux != NULL) {
-        if (aux->pets.ID == id) {
-                imprimeRotulo();
-                imprimeNo(aux);
-                printf("\nJa foi atendido? - Nao\n");
-                break;
-        } else {
-          printf("\nID nao existe\n");
-        }
-        aux = aux -> prox;
-    }
-    aux = remo -> ini;
-    while(aux != NULL) {
-        if (aux->pets.ID == id) {
-                imprimeRotulo();
-                imprimeNo(aux);
-                printf("\nJa foi atendido? - Sim\n");
-                break;
-        } else {
-          printf("\nID nao existe\n");
-        }
-        aux = aux -> prox;
-     }
+    return existe;
 }
-Fila * procuraNome (Fila * emer, Fila * norm, Fila * remo , char *nome) {
+
+int procuraNome (Fila * fila, char *nome) {
     Nos* aux;
-    aux = emer -> ini;
+    int existe =0;
+    aux = fila -> ini;
      while(aux != NULL) {
         if (strcmp(aux->pets.nome, nome) == 0) {
                 imprimeRotulo();
                 imprimeNo(aux);
-                printf("\nJa foi atendido? - Nao\n");
-                break;
+                existe = 1;
         }
         aux = aux -> prox;
     }
-    aux = norm -> ini;
-    while(aux != NULL) {
-        if (strcmp(aux->pets.nome, nome) == 0) {
-                imprimeRotulo();
-                imprimeNo(aux);
-                printf("\nJa foi atendido? - Nao\n");
-                break;
-        }
-        aux = aux -> prox;
-    }
-    aux = remo -> ini;
-    while(aux != NULL) {
-        if (strcmp(aux->pets.nome, nome) == 0) {
-                imprimeRotulo();
-                imprimeNo(aux);
-                printf("\nJa foi atendido? - Sim\n");
-                break;
-        }
-        aux = aux -> prox;
-     }
-
-
+    return existe;
 }
 
 
