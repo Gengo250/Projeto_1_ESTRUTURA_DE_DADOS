@@ -4,6 +4,8 @@
 #include <locale.h>
 #include "biblioteca.h"
 
+
+
 int main(){
 setlocale(LC_ALL, "Portuguese");
 int op, existe;
@@ -30,6 +32,8 @@ do
     printf("+--------------------------------------------------------------+\n");
     printf("Escolha sua opcao: ");
     scanf("%d", &op);
+    empty_stdin();
+
   switch (op)
   {
   case 1:
@@ -37,14 +41,12 @@ do
      do{
         printf("Digite a prioridade (0 - Emergencia || 1 - Normal): ");
         scanf("%d", &preferencia);
-
-        if(preferencia == 0 || preferencia == 1) {
-            (preferencia == 1) ? (InsereFila(Normal, preferencia)) : (InsereFila(Emergencia, preferencia));
-        }
-        else{
+        empty_stdin();
+        if (preferencia < 0 || preferencia > 1) {
             printf("\nPrioridade invalida.\n");
         }
-    }while(preferencia < 0 || preferencia > 1);
+        }while(preferencia < 0 || preferencia > 1);
+        (preferencia == 1) ? (InsereFila(Normal, preferencia)) : (InsereFila(Emergencia, preferencia));
 
   break;
 
@@ -58,10 +60,17 @@ do
         do {
             printf("Voce quer procurar pelo ID (1) ou Nome (2): ");
             scanf("%d", &f);
-        }while(f<1 || f>2);
+            empty_stdin();
+
+            if (f<1 || f>2 ) {
+                printf("Opcao invalida.\n");
+            }
+
+        }while(f<1 || f>2 );
         if(f == 1){
             printf("\nDigite o ID que deseja procurar: ");
             scanf("%d", &id);
+            empty_stdin();
             existe = procuraID(Emergencia,id);
             existe = procuraID(Normal,id);
             if ( existe==1) {
@@ -121,7 +130,7 @@ do
   break;
   default:
           limpaTela();
-  printf("\n\n\tOpçao invalida! Por favor insira valore corretos\t\n\n");
+  printf("\n\n\tOpcao invalida! Por favor insira valores corretos\t\n\n");
   break;
   }
 } while (op != 7);
